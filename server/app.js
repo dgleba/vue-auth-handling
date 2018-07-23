@@ -1,6 +1,5 @@
 "use strict";
 const express = require('express');
-const cors = require('cors');
 const DB = require('./db');
 const config = require('./config');
 const bcrypt = require('bcrypt');
