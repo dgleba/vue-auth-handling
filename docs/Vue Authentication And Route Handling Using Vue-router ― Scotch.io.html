@@ -1,0 +1,1680 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>Vue Authentication And Route Handling Using Vue-router &#8213; Scotch.io</title>
+
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#2e2e2e">
+<meta name="msapplication-TileColor" content="#2e2e2e">
+<meta name="theme-color" content="#333">
+<link rel="alternate" hreflang="en" type="application/rss+xml" href="https://scotch.io/feed" title="Scotch.io RSS Feed">
+
+<meta name="author" content="Chris Nwamba">
+<link rel="canonical" href="https://scotch.io/tutorials/vue-authentication-and-route-handling-using-vue-router">
+<link rel="amphtml" href="https://scotch.io/tutorials/vue-authentication-and-route-handling-using-vue-router/amp">
+
+<meta name="twitter:url" content="http://scotch.io/tutorials/vue-authentication-and-route-handling-using-vue-router">
+<meta name="twitter:title" content="Vue Authentication And Route Handling Using Vue-router">
+<meta name="twitter:description" content="Vue is a progressive Javascript framework that makes building frontend applications easy. Coupled with vue-router, we can build high performance applications with complete dynamic routes. Vue-router is an efficient tool and ca">
+<meta name="twitter:image" content="https://scotch-res.cloudinary.com/image/upload/w_auto,q_auto:good,f_auto/media/10/qQ3z7tSSqeBR6U9bstqn_Vue_authentication_and_route_handling_using_vue-router.png.jpg">
+<meta name="twitter:creator" content="codebeast">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@scotch_io">
+
+<meta property="og:title" content="Vue Authentication And Route Handling Using Vue-router">
+<meta property="og:image" content="https://scotch-res.cloudinary.com/image/upload/w_auto,q_auto:good,f_auto/media/10/qQ3z7tSSqeBR6U9bstqn_Vue_authentication_and_route_handling_using_vue-router.png.jpg">
+<meta property="og:description" content="Vue is a progressive Javascript framework that makes building frontend applications easy. Coupled with vue-router, we can build high performance applications with complete dynamic routes. Vue-router is an efficient tool and ca">
+<meta property="article:author" content="nwambachristian">
+<meta property="fb:admins" content="579622216,709634581">
+<meta property="fb:app_id" content="1389892087910588">
+<meta property="og:url" content="http://scotch.io/tutorials/vue-authentication-and-route-handling-using-vue-router">
+<meta property="og:type" content="article">
+<meta property="article:publisher" content="https://www.facebook.com/scotchdevelopment">
+<meta property="og:site_name" content="Scotch">
+
+<link rel="publisher" href="https://plus.google.com/b/113854128330570384219">
+<link rel="author" href="christiannwamba">
+<meta name="description" content="Vue is a progressive Javascript framework that makes building frontend applications easy. Coupled with vue-router, we can build high performance applications with complete dynamic routes. Vue-router is an efficient tool and ca">
+<meta name="google-site-verification" content="NoKkRtzSguNO3Xd1cuhpVkUoh7n8mz-aofV9Ch4aS8w">
+<meta name="article_category" data-category="vue">
+<meta name="article_tags" content="vue">
+<meta name="article_tags" content="authentication">
+<link href="https://fonts.googleapis.com/css?family=Nunito:400,700&display=fallback" rel="stylesheet">
+<link rel="stylesheet" href="https://cloud.typography.com/7250836/7079592/css/fonts.css" />
+<link rel="stylesheet" href="/css/main.css?id=81911801153d2153049c">
+<style>
+    #youtube-banner {
+        transition: 0.3s ease background;
+    }
+    #youtube-banner:hover {
+        background: rgb(231, 30, 30) !important;
+    }
+</style>
+<style>
+.related-posts-container {
+    margin-bottom: 50px;
+}
+
+.up-next {
+    margin-bottom: 5px !important;
+}
+
+.related-posts {
+    display: flex;
+}
+
+@media  screen and (max-width: 780px) {
+    .related-posts {
+        display: block;
+    }
+}
+
+.related-post {
+    font-size: 18px;
+    display: block;
+    background: #553C9A;
+    color: #E9D8FD;
+    padding: 30px 20px;
+    letter-spacing: 0;
+    font-weight: bold;
+    line-height: 1.5;
+    width: 50%;
+}
+
+.related-post:nth-child(2) {
+    background: #6B46C1;
+}
+
+.related-post:hover {
+    background: #805AD5;
+    color: #E9D8FD;
+}
+
+.related-post .main-tag {
+    font-size: 11px;
+    margin-bottom: 5px;
+    text-transform: uppercase;
+    letter-spacing: -0.2px;
+    display: block;
+    opacity: 0.8;
+}
+</style>
+<script>
+        window.scotchy = window.scotchy || {};
+        window.scotchy.env = 'production';
+    </script>
+<script>
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.ready.then(function(registration) {
+                registration.unregister();
+            });
+        }
+    </script>
+</head>
+<body class="is-single is-post  ">
+<nav id="scotchy-nav" class="navbar is-dark">
+<div class="navbar-brand">
+<a class="navbar-item" href="/">
+<div class="scotch-container">
+<div class="scotch-logo">
+<img class="scotch-logo__image" src="/img/blank-glass.png" alt="Scotch Logo" width="30" height="49">
+<svg class="scotch-logo__liquid" viewBox="0 0 30 48" style="max-width: 80px">
+<defs>
+<clipPath id="clip-path--glass">
+<path class="liquid__path-container" d="M 8.6 1.5 c 0 13.33 -4.17 20 -3.75 23.33 a 9.17 8.33 0 0 0 20.83 0 c 0.42 -3.33 -3.75 -10 -3.75 -23.33 Z"></path>
+</clipPath>
+<clipPath id="clip-path--liquid">
+<path class="liquid__path liquid__path--top-clip" d="M -80 22 C -75.08 16 -69.08 16 -64.17 22 S -53.25 28 -48.33 22 S -37.42 16 -32.5 22 S -21.58 28 -16.67 22 S -5.75 16 -0.83 22 S 10.08 28 15 22 S 25.92 16 30.83 22 S 41.75 28 46.67 22 S 57.58 16 62.5 22 S 73.42 28 78.33 22 S 89.25 16 94.17 22 S 105.08 28 110 22 l 0 30 l -190 0"></path>
+</clipPath>
+</defs>
+<g clip-path="url(#clip-path--glass)">
+<circle class="liquid__drop liquid__drop--top liquid__drop--1" cx="18.3" cy="3.3" r="1.5"></circle>
+<circle class="liquid__drop liquid__drop--bottom liquid__drop--2" cx="12" cy="5" r="1.5"></circle>
+<path class="liquid__path liquid__path--top" d="M -80 22 C -75.08 16 -69.08 16 -64.17 22 S -53.25 28 -48.33 22 S -37.42 16 -32.5 22 S -21.58 28 -16.67 22 S -5.75 16 -0.83 22 S 10.08 28 15 22 S 25.92 16 30.83 22 S 41.75 28 46.67 22 S 57.58 16 62.5 22 S 73.42 28 78.33 22 S 89.25 16 94.17 22 S 105.08 28 110 22 l 0 30 l -190 0"></path>
+<path class="liquid__path liquid__path--bottom" d="M -70 24.5 C -65.92 18.5 -59.92 18.5 -55.83 24.5 S -45.75 30.5 -41.67 24.5 S -31.58 18.5 -27.5 24.5 S -17.42 30.5 -13.33 24.5 S -3.25 18.5 0.83 24.5 S 10.92 30.5 15 24.5 S 25.08 18.5 29.17 24.5 S 39.25 30.5 43.33 24.5 S 53.42 18.5 57.5 24.5 S 67.58 30.5 71.67 24.5 S 81.75 18.5 85.83 24.5 S 95.92 30.5 100 24.5 l 0 30 l -170 0"></path>
+<g class="liquid__path--clip-container" clip-path="url(#clip-path--liquid)">
+<path class="liquid__path liquid__path--bottom-clip" d="M -70 24.5 C -65.92 18.5 -59.92 18.5 -55.83 24.5 S -45.75 30.5 -41.67 24.5 S -31.58 18.5 -27.5 24.5 S -17.42 30.5 -13.33 24.5 S -3.25 18.5 0.83 24.5 S 10.92 30.5 15 24.5 S 25.08 18.5 29.17 24.5 S 39.25 30.5 43.33 24.5 S 53.42 18.5 57.5 24.5 S 67.58 30.5 71.67 24.5 S 81.75 18.5 85.83 24.5 S 95.92 30.5 100 24.5 l 0 30 l -170 0"></path>
+</g>
+</g>
+</svg>
+</div>
+</div>
+<span class="logo-text">Scotch</span>
+</a>
+<a role="button" class="navbar-burger" data-target="nav-menu" aria-label="menu" aria-expanded="false">
+<span aria-hidden="true"></span>
+<span aria-hidden="true"></span>
+<span aria-hidden="true"></span>
+</a>
+</div>
+<div id="nav-menu" class="navbar-menu">
+<div class="navbar-start">
+<a class="navbar-item " href="/courses" title="Courses">
+<span class="left">Video</span>
+<span class="right">Courses</span>
+</a>
+<a class="navbar-item is-active" href="/tutorials" title="Tutorials">
+<span class="left">Written</span>
+<span class="right">Tutorials</span>
+</a>
+ <a class="navbar-item " href="/bar-talk" title="News">
+<span class="left">Bar Talk</span>
+<span class="right">News</span>
+</a>
+<a class="navbar-item " href="/community" title="Community Posts">
+<span class="left">Bar Talk</span>
+<span class="right">Community</span>
+</a>
+<a class="navbar-item is-secondary " href="/jobs">
+<span class="left">Awesome</span> <span class="right">Jobs</span>
+</a>
+<a class="navbar-item is-secondary " href="/free-tools">
+<span class="left">Awesome</span> <span class="right">Free Tools</span>
+</a>
+<div class="navbar-item has-dropdown is-hoverable is-hidden-tablet-only is-hidden-mobile navbar-extra">
+<a class="navbar-link">...</a>
+<div class="navbar-dropdown">
+<a class="navbar-item" href="/about">About</a>
+<a class="navbar-item" href="/newsletter">Newsletter</a>
+<a class="navbar-item" href="/glossary/javascript">Glossary</a>
+<a class="navbar-item" href="https://shop.scotch.io">Shop</a>
+<a class="navbar-item" href="/code-challenges">Code Challenges</a>
+<a class="navbar-item" href="/cool-stuff">Deals & Discounts</a>
+<div class="navbar-item">
+<a class="m-r-sm" href="https://twitter.com/scotch_io" title="Follow Scotch on Twitter" aria-label="Follow Scotch on Twitter">
+<i class="fab fa-fw fa-twitter has-text-info"></i>
+</a>
+<a href="https://facebook.com/scotchdevelopment" title="Follow Scotch on Facebook" aria-label="Follow Scotch on Facebook" style="margin-right: 15px;">
+<i class="fab fa-fw fa-facebook has-text-link"></i>
+</a>
+<a href="https://facebook.com/scotchdevelopment" title="Follow Scotch on GitHub" aria-label="Follow Scotch on GitHub" style="margin-right: 15px;">
+<i class="fab fa-fw fa-github-alt has-text-white"></i>
+</a>
+<a href="https://www.youtube.com/channel/UCLyOul64B-SwBpOd9f2Kfxw" title="Follow Scotch on YouTube" aria-label="Follow Scotch on YouTube">
+<i class="fab fa-fw fa-youtube has-text-danger"></i>
+</a>
+</div>
+</div>
+</div>
+</div>
+<div class="navbar-end">
+<div id="react-search-bar"></div>
+<div id="react-user-nav"></div>
+</div>
+</div>
+</nav>
+<nav id="tag-nav" class="navbar is-dark is-hidden-touch">
+<a class="navbar-item color-react" href="/tag/react">
+<span>#</span>react
+</a>
+<a class="navbar-item color-vue" href="/tag/vue">
+<span>#</span>vue
+</a>
+<a class="navbar-item color-angular" href="/tag/angular">
+<span>#</span>angular
+</a>
+<a class="navbar-item color-javascript" href="/tag/javascript">
+<span>#</span>javascript
+</a>
+<a class="navbar-item color-laravel" href="/tag/laravel">
+<span>#</span>laravel
+</a>
+<a class="navbar-item color-css" href="/tag/css">
+<span>#</span>css
+</a>
+<a class="navbar-item color-python" href="/tag/python">
+<span>#</span>python
+</a>
+</nav>
+<div id="react-login-modal"></div>
+<main id="scotchy-main">
+ <div id="react-article-tools" data-type="post" data-edit-url="https://my.scotch.io/posts/38366" data-id="38366" data-author-id="10" data-status="published" data-is-preview="" data-is-community="">
+</div>
+<div id="react-table-of-contents"></div>
+<div id="article-share-buttons">
+<a href="https://scotch.io/tutorials/vue-authentication-and-route-handling-using-vue-router?utm_source=scotch&amp;utm_campaign=share&utm_medium=twitter" class="action-button share-button is-social is-twitter m-t" title="Share to Twitter" data-title="Vue Authentication And Route Handling Using Vue-router" data-type="Twitter" data-via="scotch_io" data-tooltip="Chirp chirp">
+<div role="button" aria-label="Twitter"><i class="fab fa-twitter fa-xs" data-fa-transform="right-0.5 down-0.3"></i></div>
+</a>
+<a href="https://scotch.io/tutorials/vue-authentication-and-route-handling-using-vue-router?utm_source=scotch&amp;utm_campaign=share&utm_medium=facebook" class="action-button share-button is-social is-facebook m-t" title="Share to Facebook" data-title="Vue Authentication And Route Handling Using Vue-router" data-type="Facebook" data-tooltip="Zuck it">
+<div role="button" aria-label="Facebook"><i class="fab fa-facebook fa-xs" data-fa-transform="up-0.2"></i></div>
+</a>
+<a href="https://scotch.io/tutorials/vue-authentication-and-route-handling-using-vue-router?utm_source=scotch&amp;utm_campaign=share&utm_medium=reddit" class="action-button share-button is-social is-reddit m-t" title="Share to Reddit" data-title="Vue Authentication And Route Handling Using Vue-router" data-type="Reddit" data-tooltip="Karma me">
+<div role="button" aria-label="Reddit"><i class="fab fa-reddit-alien fa-xs" data-fa-transform="left-0.1 up-0.4"></i></div>
+</a>
+</div>
+<article class="article is-post  is-">
+<div class="article-background is-left"></div>
+<div class="article-background is-right"></div>
+<header class="article-header">
+<a href="https://bit.ly/2IHjZQu" id="youtube-banner" class="has-text-centered p-a-sm" style="
+    display: none;
+    background: #E20000;
+    color: rgb(255, 238, 238);
+">
+<i class="fab fa-youtube m-r-sm"></i> We're live-coding on YouTube! Join us!
+</a>
+<section class="
+    hero
+    article-hero
+     is-dark      is-vue     has-feature
+">
+<div class="hero-body p-t-md">
+<div class="container">
+<div class="is-hidden-with-subscription has-text-centered">
+<div id="bsa-zone_1537909991-0_123456"></div>
+</div>
+<div class="article-header is-post p-y">
+<div class="article-header-top m-b">
+<div class="article-title m-b-xs m-t-md">
+<h1 class="title is-2 m-a-0">Vue Authentication And Route Handling Using Vue-router</h1>
+</div>
+<div class="article-byline" style="margin-bottom: 40px;">
+<div class="scotch-line">
+<div class="author">
+<a href="/@codebeast" class="img" title="Chris Nwamba's Avatar" style="background-image: url(https://scotch-res.cloudinary.com/image/upload/w_40,h_40,q_auto:good,f_auto,c_fill,g_face/v1552457957/yegxcyzwauxtpebjs2hx.jpg);">
+</a>
+<a href="/@codebeast" title="Chris Nwamba">
+Chris Nwamba
+</a>
+<a class="m-l-xs" href="https://twitter.com/codebeast" title="Follow @codebeast on Twitter">
+(@codebeast)
+</a>
+</div>
+<time>July 06, 2018</time>
+<a href="#comments" class="comment-number" title="Comments on this Article" data-id="38366" data-has-words="true">
+0 Comments
+</a>
+<span class="hotness">
+<span class="pageviews" data-type="post" data-id="38366"></span> Views
+</span>
+<div id="react-bookmark" data-article-type="post" data-article-id="38366" data-article-title="Vue Authentication And Route Handling Using Vue-router">
+</div>
+</div>
+</div>
+</div>
+<div class="columns is-desktop">
+<div class="column">
+<div class="article-feature">
+<div class="article-image is-2by1">
+<img src="https://scotch-res.cloudinary.com/image/upload/w_1050,q_auto:good,f_auto/media/10/qQ3z7tSSqeBR6U9bstqn_Vue_authentication_and_route_handling_using_vue-router.png.jpg" class="media" alt="Vue Authentication And Route Handling Using Vue-router">
+</div>
+</div>
+</div>
+<div class="column is-narrow is-right is-flex" style="flex-basis: 340px; flex-direction: column; justify-content: space-between;">
+<div style="width: 100%">
+</div>
+<div style="width: 100%">
+<div class="react-syndicate m-b-sm" data-take="1"></div>
+</div>
+</div>
+</div>
+<div class="columns">
+<div class="column">
+<div class="article-actions is-post p-t">
+<a href="https://github.com/christiannwamba/vue-auth-handling" target="_blank" rel="noopener noreferrer" class="button is-scotch is-large is-outlined is-info is-rounded">
+Project
+</a>
+</div>
+</div>
+<div class="column is-narrow is-left" style="flex-basis: 340px;"></div>
+</div>
+</div>
+</div>
+</div>
+<svg class="diagonal" width="100%" height="300px" viewBox="0 0 100 100" preserveAspectRatio="none">
+<polygon fill="#ffffff" points="0,100 100,0 100,100"></polygon>
+</svg>
+</section>
+</header>
+<div class="section content">
+<div class="container m-b-0 is-fluid">
+<div class="columns is-gapless">
+<div class="column is-narrow is-left">
+<div class="article-inner">
+</div>
+</div>
+<div class="column is-middle">
+<div class="article-inner">
+<div class="article-content">
+<p><a href="https://vuejs.org">Vue</a> is a progressive Javascript framework that makes building frontend applications easy. Coupled with <a href="https://router.vuejs.org">vue-router</a>, we can build high performance applications with complete dynamic routes.
+Vue-router is an efficient tool and can handle authentication in our Vue application seamlessly. In this tutorial, we will look at using vue-router to handle authentication and access control for different parts of our application.</p>
+<h2 id="toc-getting-started">
+<a href="#toc-getting-started">Getting Started</a>
+</h2>
+<p>To begin, install Vue cli and create a vue application with it:</p><div class="table-of-contents"><h3>Table of Contents</h3><ul><li><a href="#toc-getting-started">
+Getting Started
+</a></li><li><a href="#toc-setup-node-js-server">
+Setup Node.js Server
+</a></li><li><a href="#toc-updating-the-vue-router-file">
+Updating The Vue-router File
+</a></li><li><a href="#toc-define-some-components">
+Define Some Components
+</a></li><li><a href="#toc-setting-up-axios-globally">
+Setting Up Axios Globally
+</a></li><li><a href="#toc-running-the-application">
+Running The Application
+</a></li><li><a href="#toc-conclusion">
+Conclusion
+</a></li></ul></div>
+<pre class="language-bash" data-title="bash"><code class="language-bash">$ <span class="token function">npm</span> <span class="token function">install</span> -g @vue/cli
+$ <span class="token function">npm</span> <span class="token function">install</span> -g @vue/cli-init
+$ vue init webpack vue-router-auth</code></pre>
+<p>Follow the setup prompt and complete the installation of this application. If you are not sure of an option, simply click the return key (enter key) to continue with the default option. When asked to install vue-router, accept the option, because we need vue-router for this application.</p>
+<h2 id="toc-setup-node-js-server">
+<a href="#toc-setup-node-js-server">Setup Node.js Server</a>
+</h2>
+<p>Next, we will setup a <a href="https://nodejs.org">Node.js</a> server that would handle authentication for us. For our Node.js server, we will use <a href="https://www.sqlite.org">SQLite</a> as the database of choice. Run the following command to install SQLite driver:</p>
+<pre class="language-bash" data-title="bash"><code class="language-bash">$ <span class="token function">npm</span> <span class="token function">install</span> --save sqlite3</code></pre>
+<p>Because we are dealing with passwords, we need a way to hash passwords. We will use <a href="https://www.npmjs.com/package/bcrypt">bcrypt</a> to hash all our passwords. Run the following command to install it:</p>
+<pre class="language-bash" data-title="bash"><code class="language-bash">$ <span class="token function">npm</span> <span class="token function">install</span> --save bcrypt</code></pre>
+<p>We also want a way to confirm the user&#x2019;s we authenticate when they try to make a request to a secured part of our application. For this, we will use <a href="https://jwt.io/">JWT</a>. Run the following command to install the JWT package we will use:</p>
+<pre class="language-bash" data-title="bash"><code class="language-bash">$ <span class="token function">npm</span> <span class="token function">install</span> jsonwebtoken --save</code></pre>
+<p>To read <code>json</code> data we will send to our server, we need <code>body-parser</code>. Run the following command to install it:</p>
+<pre class="language-bash" data-title="bash"><code class="language-bash">$ <span class="token function">npm</span> <span class="token function">install</span> --save body-parser</code></pre>
+<p>Now that it&#x2019;s all set, let us create a simple nodejs server that would handle user authentication. Create a new directory named <strong>server</strong>. This is where we will store everything we will use to make our node backend. In the server directory, create a file and save it as <code>app.js</code>.
+Add the following to it:</p>
+<a href="https://bit.ly/2Xeeq5t" style='display: block; padding: 15px; border: 1px solid #ddd; border-radius: 10px; margin-bottom: 35px; font-size: 18px'>
+<strong style='color: #444;'>Essential Reading</strong>: Learn React from Scratch! (2019 Edition)
+</a>
+<pre class="language-javascript" data-title="javascript"><code class="language-javascript"><span class="token string">&quot;use strict&quot;</span><span class="token punctuation">;</span>
+<span class="token keyword">const</span> express <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">&apos;express&apos;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">const</span> <span class="token constant">DB</span> <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">&apos;./db&apos;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">const</span> config <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">&apos;./config&apos;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">const</span> bcrypt <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">&apos;bcrypt&apos;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">const</span> jwt <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">&apos;jsonwebtoken&apos;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">const</span> bodyParser <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">&apos;body-parser&apos;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token keyword">const</span> db <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">DB</span><span class="token punctuation">(</span><span class="token string">&quot;sqlitedb&quot;</span><span class="token punctuation">)</span>
+<span class="token keyword">const</span> app <span class="token operator">=</span> <span class="token function">express</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">const</span> router <span class="token operator">=</span> express<span class="token punctuation">.</span><span class="token function">Router</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+router<span class="token punctuation">.</span><span class="token function">use</span><span class="token punctuation">(</span>bodyParser<span class="token punctuation">.</span><span class="token function">urlencoded</span><span class="token punctuation">(</span><span class="token punctuation">{</span> extended<span class="token punctuation">:</span> <span class="token boolean">false</span> <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+router<span class="token punctuation">.</span><span class="token function">use</span><span class="token punctuation">(</span>bodyParser<span class="token punctuation">.</span><span class="token function">json</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+<p>We have required all the packages we need for our application, defined the database, created an express server and an express router.</p>
+<p>Now, let&apos;s define CORS middleware, to ensure we do not run into any cross origin resource errors:</p>
+<pre class="language-javascript" data-title="javascript"><code class="language-javascript"><span class="token comment">// CORS middleware</span>
+<span class="token keyword">const</span> <span class="token function-variable function">allowCrossDomain</span> <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span>req<span class="token punctuation">,</span> res<span class="token punctuation">,</span> next<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    res<span class="token punctuation">.</span><span class="token function">header</span><span class="token punctuation">(</span><span class="token string">&apos;Access-Control-Allow-Origin&apos;</span><span class="token punctuation">,</span> <span class="token string">&apos;*&apos;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    res<span class="token punctuation">.</span><span class="token function">header</span><span class="token punctuation">(</span><span class="token string">&apos;Access-Control-Allow-Methods&apos;</span><span class="token punctuation">,</span> <span class="token string">&apos;*&apos;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    res<span class="token punctuation">.</span><span class="token function">header</span><span class="token punctuation">(</span><span class="token string">&apos;Access-Control-Allow-Headers&apos;</span><span class="token punctuation">,</span> <span class="token string">&apos;*&apos;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">next</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+app<span class="token punctuation">.</span><span class="token function">use</span><span class="token punctuation">(</span>allowCrossDomain<span class="token punctuation">)</span></code></pre>
+<p>Many people would use a CORS package here, but we do not have any complicated configurations, so this is fine.</p>
+<p>Let&apos;s define the route for registering a new user:</p>
+<pre class="language-javascript" data-title="javascript"><code class="language-javascript">router<span class="token punctuation">.</span><span class="token function">post</span><span class="token punctuation">(</span><span class="token string">&apos;/register&apos;</span><span class="token punctuation">,</span> <span class="token keyword">function</span><span class="token punctuation">(</span>req<span class="token punctuation">,</span> res<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    db<span class="token punctuation">.</span><span class="token function">insert</span><span class="token punctuation">(</span><span class="token punctuation">[</span>
+        req<span class="token punctuation">.</span>body<span class="token punctuation">.</span>name<span class="token punctuation">,</span>
+        req<span class="token punctuation">.</span>body<span class="token punctuation">.</span>email<span class="token punctuation">,</span>
+        bcrypt<span class="token punctuation">.</span><span class="token function">hashSync</span><span class="token punctuation">(</span>req<span class="token punctuation">.</span>body<span class="token punctuation">.</span>password<span class="token punctuation">,</span> <span class="token number">8</span><span class="token punctuation">)</span>
+    <span class="token punctuation">]</span><span class="token punctuation">,</span>
+    <span class="token keyword">function</span> <span class="token punctuation">(</span>err<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>err<span class="token punctuation">)</span> <span class="token keyword">return</span> res<span class="token punctuation">.</span><span class="token function">status</span><span class="token punctuation">(</span><span class="token number">500</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">send</span><span class="token punctuation">(</span><span class="token string">&quot;There was a problem registering the user.&quot;</span><span class="token punctuation">)</span>
+        db<span class="token punctuation">.</span><span class="token function">selectByEmail</span><span class="token punctuation">(</span>req<span class="token punctuation">.</span>body<span class="token punctuation">.</span>email<span class="token punctuation">,</span> <span class="token punctuation">(</span>err<span class="token punctuation">,</span>user<span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+            <span class="token keyword">if</span> <span class="token punctuation">(</span>err<span class="token punctuation">)</span> <span class="token keyword">return</span> res<span class="token punctuation">.</span><span class="token function">status</span><span class="token punctuation">(</span><span class="token number">500</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">send</span><span class="token punctuation">(</span><span class="token string">&quot;There was a problem getting user&quot;</span><span class="token punctuation">)</span>
+            <span class="token keyword">let</span> token <span class="token operator">=</span> jwt<span class="token punctuation">.</span><span class="token function">sign</span><span class="token punctuation">(</span><span class="token punctuation">{</span> id<span class="token punctuation">:</span> user<span class="token punctuation">.</span>id <span class="token punctuation">}</span><span class="token punctuation">,</span> config<span class="token punctuation">.</span>secret<span class="token punctuation">,</span> <span class="token punctuation">{</span>expiresIn<span class="token punctuation">:</span> <span class="token number">86400</span> <span class="token comment">// expires in 24 hours</span>
+            <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            res<span class="token punctuation">.</span><span class="token function">status</span><span class="token punctuation">(</span><span class="token number">200</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">send</span><span class="token punctuation">(</span><span class="token punctuation">{</span> auth<span class="token punctuation">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span> token<span class="token punctuation">:</span> token<span class="token punctuation">,</span> user<span class="token punctuation">:</span> user <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span> 
+    <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span> 
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+<p>There are a few things happening here. First, we pass the request body to a database method (which we will define later), and pass a callback function that to handle the response from the database operation. As expected, we have defined error checks to ensure we provide accurate information ot users.</p>
+<p>When a user is successfully registered, we select the user data by email and create an authentication token for the user with the <code>jwt</code> package we had imported earlier. We use a secret key in our config file (which we will create later) to sign the auth credentials. This way, we can verify a token sent to our server and a user cannot fake an identity.</p>
+<p>Now, define the route for registering an administrator and logging in, which are similar to register:</p>
+<pre class="language-javascript" data-title="javascript"><code class="language-javascript">router<span class="token punctuation">.</span><span class="token function">post</span><span class="token punctuation">(</span><span class="token string">&apos;/register-admin&apos;</span><span class="token punctuation">,</span> <span class="token keyword">function</span><span class="token punctuation">(</span>req<span class="token punctuation">,</span> res<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    db<span class="token punctuation">.</span><span class="token function">insertAdmin</span><span class="token punctuation">(</span><span class="token punctuation">[</span>
+        req<span class="token punctuation">.</span>body<span class="token punctuation">.</span>name<span class="token punctuation">,</span>
+        req<span class="token punctuation">.</span>body<span class="token punctuation">.</span>email<span class="token punctuation">,</span>
+        bcrypt<span class="token punctuation">.</span><span class="token function">hashSync</span><span class="token punctuation">(</span>req<span class="token punctuation">.</span>body<span class="token punctuation">.</span>password<span class="token punctuation">,</span> <span class="token number">8</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+        <span class="token number">1</span>
+    <span class="token punctuation">]</span><span class="token punctuation">,</span>
+    <span class="token keyword">function</span> <span class="token punctuation">(</span>err<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>err<span class="token punctuation">)</span> <span class="token keyword">return</span> res<span class="token punctuation">.</span><span class="token function">status</span><span class="token punctuation">(</span><span class="token number">500</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">send</span><span class="token punctuation">(</span><span class="token string">&quot;There was a problem registering the user.&quot;</span><span class="token punctuation">)</span>
+        db<span class="token punctuation">.</span><span class="token function">selectByEmail</span><span class="token punctuation">(</span>req<span class="token punctuation">.</span>body<span class="token punctuation">.</span>email<span class="token punctuation">,</span> <span class="token punctuation">(</span>err<span class="token punctuation">,</span>user<span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+            <span class="token keyword">if</span> <span class="token punctuation">(</span>err<span class="token punctuation">)</span> <span class="token keyword">return</span> res<span class="token punctuation">.</span><span class="token function">status</span><span class="token punctuation">(</span><span class="token number">500</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">send</span><span class="token punctuation">(</span><span class="token string">&quot;There was a problem getting user&quot;</span><span class="token punctuation">)</span>
+            <span class="token keyword">let</span> token <span class="token operator">=</span> jwt<span class="token punctuation">.</span><span class="token function">sign</span><span class="token punctuation">(</span><span class="token punctuation">{</span> id<span class="token punctuation">:</span> user<span class="token punctuation">.</span>id <span class="token punctuation">}</span><span class="token punctuation">,</span> config<span class="token punctuation">.</span>secret<span class="token punctuation">,</span> <span class="token punctuation">{</span> expiresIn<span class="token punctuation">:</span> <span class="token number">86400</span> <span class="token comment">// expires in 24 hours</span>
+            <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            res<span class="token punctuation">.</span><span class="token function">status</span><span class="token punctuation">(</span><span class="token number">200</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">send</span><span class="token punctuation">(</span><span class="token punctuation">{</span> auth<span class="token punctuation">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span> token<span class="token punctuation">:</span> token<span class="token punctuation">,</span> user<span class="token punctuation">:</span> user <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span> 
+    <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span> 
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+router<span class="token punctuation">.</span><span class="token function">post</span><span class="token punctuation">(</span><span class="token string">&apos;/login&apos;</span><span class="token punctuation">,</span> <span class="token punctuation">(</span>req<span class="token punctuation">,</span> res<span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+    db<span class="token punctuation">.</span><span class="token function">selectByEmail</span><span class="token punctuation">(</span>req<span class="token punctuation">.</span>body<span class="token punctuation">.</span>email<span class="token punctuation">,</span> <span class="token punctuation">(</span>err<span class="token punctuation">,</span> user<span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>err<span class="token punctuation">)</span> <span class="token keyword">return</span> res<span class="token punctuation">.</span><span class="token function">status</span><span class="token punctuation">(</span><span class="token number">500</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">send</span><span class="token punctuation">(</span><span class="token string">&apos;Error on the server.&apos;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>user<span class="token punctuation">)</span> <span class="token keyword">return</span> res<span class="token punctuation">.</span><span class="token function">status</span><span class="token punctuation">(</span><span class="token number">404</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">send</span><span class="token punctuation">(</span><span class="token string">&apos;No user found.&apos;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">let</span> passwordIsValid <span class="token operator">=</span> bcrypt<span class="token punctuation">.</span><span class="token function">compareSync</span><span class="token punctuation">(</span>req<span class="token punctuation">.</span>body<span class="token punctuation">.</span>password<span class="token punctuation">,</span> user<span class="token punctuation">.</span>user_pass<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>passwordIsValid<span class="token punctuation">)</span> <span class="token keyword">return</span> res<span class="token punctuation">.</span><span class="token function">status</span><span class="token punctuation">(</span><span class="token number">401</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">send</span><span class="token punctuation">(</span><span class="token punctuation">{</span> auth<span class="token punctuation">:</span> <span class="token boolean">false</span><span class="token punctuation">,</span> token<span class="token punctuation">:</span> <span class="token keyword">null</span> <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">let</span> token <span class="token operator">=</span> jwt<span class="token punctuation">.</span><span class="token function">sign</span><span class="token punctuation">(</span><span class="token punctuation">{</span> id<span class="token punctuation">:</span> user<span class="token punctuation">.</span>id <span class="token punctuation">}</span><span class="token punctuation">,</span> config<span class="token punctuation">.</span>secret<span class="token punctuation">,</span> <span class="token punctuation">{</span> expiresIn<span class="token punctuation">:</span> <span class="token number">86400</span> <span class="token comment">// expires in 24 hours</span>
+        <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        res<span class="token punctuation">.</span><span class="token function">status</span><span class="token punctuation">(</span><span class="token number">200</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">send</span><span class="token punctuation">(</span><span class="token punctuation">{</span> auth<span class="token punctuation">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span> token<span class="token punctuation">:</span> token<span class="token punctuation">,</span> user<span class="token punctuation">:</span> user <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span></code></pre>
+<p>For login, we use bcrypt to compare our hashed password with the user supplied password. If they are the same, we log the user in. If not, well, feel free to respond to the user how you please.</p>
+<p>Now, let&apos;s use the express server to make our application accessible:</p>
+<pre class="language-javascript" data-title="javascript"><code class="language-javascript">app<span class="token punctuation">.</span><span class="token function">use</span><span class="token punctuation">(</span>router<span class="token punctuation">)</span>
+
+<span class="token keyword">let</span> port <span class="token operator">=</span> process<span class="token punctuation">.</span>env<span class="token punctuation">.</span><span class="token constant">PORT</span> <span class="token operator">||</span> <span class="token number">3000</span><span class="token punctuation">;</span>
+
+<span class="token keyword">let</span> server <span class="token operator">=</span> app<span class="token punctuation">.</span><span class="token function">listen</span><span class="token punctuation">(</span>port<span class="token punctuation">,</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">&apos;Express server listening on port &apos;</span> <span class="token operator">+</span> port<span class="token punctuation">)</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+<p>We created a server on <code>port: 3000</code> or any dynamically generated port by our system (heroku generates dynamic ports).</p>
+<blockquote>
+<p>If you find any of the above confusing, you can take an <a href="https://scotch.io/courses/getting-started-with-nodejs">introductory course</a> on Node.js</p>
+</blockquote>
+<p>Then, create another file <code>config.js</code> in the same directory and add the following to it:</p>
+<pre class="language-javascript" data-title="javascript"><code class="language-javascript">module<span class="token punctuation">.</span>exports <span class="token operator">=</span> <span class="token punctuation">{</span>
+    <span class="token string">&apos;secret&apos;</span><span class="token punctuation">:</span> <span class="token string">&apos;supersecret&apos;</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span></code></pre>
+<p>Finally, create another file <code>db.js</code> and add the following to it:</p>
+<pre class="language-javascript" data-title="javascript"><code class="language-javascript"><span class="token string">&quot;use strict&quot;</span><span class="token punctuation">;</span>
+<span class="token keyword">const</span> sqlite3 <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">&apos;sqlite3&apos;</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">verbose</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token keyword">class</span> <span class="token class-name">Db</span> <span class="token punctuation">{</span>
+    <span class="token function">constructor</span><span class="token punctuation">(</span>file<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>db <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">sqlite3<span class="token punctuation">.</span>Database</span><span class="token punctuation">(</span>file<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">createTable</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token function">createTable</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">const</span> sql <span class="token operator">=</span> <span class="token template-string"><span class="token string">`
+            CREATE TABLE IF NOT EXISTS user (
+                id integer PRIMARY KEY, 
+                name text, 
+                email text UNIQUE, 
+                user_pass text,
+                is_admin integer)`</span></span>
+        <span class="token keyword">return</span> <span class="token keyword">this</span><span class="token punctuation">.</span>db<span class="token punctuation">.</span><span class="token function">run</span><span class="token punctuation">(</span>sql<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token function">selectByEmail</span><span class="token punctuation">(</span>email<span class="token punctuation">,</span> callback<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> <span class="token keyword">this</span><span class="token punctuation">.</span>db<span class="token punctuation">.</span><span class="token keyword">get</span><span class="token punctuation">(</span>
+            <span class="token template-string"><span class="token string">`SELECT * FROM user WHERE email = ?`</span></span><span class="token punctuation">,</span>
+            <span class="token punctuation">[</span>email<span class="token punctuation">]</span><span class="token punctuation">,</span><span class="token keyword">function</span><span class="token punctuation">(</span>err<span class="token punctuation">,</span>row<span class="token punctuation">)</span><span class="token punctuation">{</span>
+                <span class="token function">callback</span><span class="token punctuation">(</span>err<span class="token punctuation">,</span>row<span class="token punctuation">)</span>
+            <span class="token punctuation">}</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token function">insertAdmin</span><span class="token punctuation">(</span>user<span class="token punctuation">,</span> callback<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> <span class="token keyword">this</span><span class="token punctuation">.</span>db<span class="token punctuation">.</span><span class="token function">run</span><span class="token punctuation">(</span>
+            <span class="token string">&apos;INSERT INTO user (name,email,user_pass,is_admin) VALUES (?,?,?,?)&apos;</span><span class="token punctuation">,</span>
+            user<span class="token punctuation">,</span> <span class="token punctuation">(</span>err<span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+                <span class="token function">callback</span><span class="token punctuation">(</span>err<span class="token punctuation">)</span>
+            <span class="token punctuation">}</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token function">selectAll</span><span class="token punctuation">(</span>callback<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> <span class="token keyword">this</span><span class="token punctuation">.</span>db<span class="token punctuation">.</span><span class="token function">all</span><span class="token punctuation">(</span><span class="token template-string"><span class="token string">`SELECT * FROM user`</span></span><span class="token punctuation">,</span> <span class="token keyword">function</span><span class="token punctuation">(</span>err<span class="token punctuation">,</span>rows<span class="token punctuation">)</span><span class="token punctuation">{</span>
+            <span class="token function">callback</span><span class="token punctuation">(</span>err<span class="token punctuation">,</span>rows<span class="token punctuation">)</span>
+        <span class="token punctuation">}</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token function">insert</span><span class="token punctuation">(</span>user<span class="token punctuation">,</span> callback<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> <span class="token keyword">this</span><span class="token punctuation">.</span>db<span class="token punctuation">.</span><span class="token function">run</span><span class="token punctuation">(</span>
+            <span class="token string">&apos;INSERT INTO user (name,email,user_pass) VALUES (?,?,?)&apos;</span><span class="token punctuation">,</span>
+            user<span class="token punctuation">,</span> <span class="token punctuation">(</span>err<span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+                <span class="token function">callback</span><span class="token punctuation">(</span>err<span class="token punctuation">)</span>
+            <span class="token punctuation">}</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+module<span class="token punctuation">.</span>exports <span class="token operator">=</span> Db</code></pre>
+<p>We created a class for our database to abstract the basic functions we need. You may want to use more generic and reusable methods here for database operations and likely use a promise to make it more efficient. This will allow you have a repository you can use with all other classes you define (especially if your application uses MVC architecture and has controllers).</p>
+<p>All done and looking good, let&#x2019;s make the vue application now.</p>
+<h2 id="toc-updating-the-vue-router-file">
+<a href="#toc-updating-the-vue-router-file">Updating The Vue-router File</a>
+</h2>
+<p>The vue-router file can be found in <code>./src/router/</code> directory. In the <code>index.js</code> file, we will define all the routes we want our application to have. This is different from what we did with our server and should not be confused.</p>
+<p>Open the file and add the following:</p>
+<pre class="language-javascript" data-title="javascript"><code class="language-javascript"><span class="token keyword">import</span> Vue <span class="token keyword">from</span> <span class="token string">&apos;vue&apos;</span>
+<span class="token keyword">import</span> Router <span class="token keyword">from</span> <span class="token string">&apos;vue-router&apos;</span>
+<span class="token keyword">import</span> HelloWorld <span class="token keyword">from</span> <span class="token string">&apos;@/components/HelloWorld&apos;</span>
+<span class="token keyword">import</span> Login <span class="token keyword">from</span> <span class="token string">&apos;@/components/Login&apos;</span>
+<span class="token keyword">import</span> Register <span class="token keyword">from</span> <span class="token string">&apos;@/components/Register&apos;</span>
+<span class="token keyword">import</span> UserBoard <span class="token keyword">from</span> <span class="token string">&apos;@/components/UserBoard&apos;</span>
+<span class="token keyword">import</span> Admin <span class="token keyword">from</span> <span class="token string">&apos;@/components/Admin&apos;</span>
+
+Vue<span class="token punctuation">.</span><span class="token function">use</span><span class="token punctuation">(</span>Router<span class="token punctuation">)</span></code></pre>
+<p>We have imported all the components our application will use. We will create the components below.</p>
+<p>Now, let&apos;s define the routes for our application:</p>
+<pre class="language-javascript" data-title="javascript"><code class="language-javascript"><span class="token keyword">let</span> router <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Router</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+    mode<span class="token punctuation">:</span> <span class="token string">&apos;history&apos;</span><span class="token punctuation">,</span>
+    routes<span class="token punctuation">:</span> <span class="token punctuation">[</span>
+        <span class="token punctuation">{</span>
+            path<span class="token punctuation">:</span> <span class="token string">&apos;/&apos;</span><span class="token punctuation">,</span>
+            name<span class="token punctuation">:</span> <span class="token string">&apos;HelloWorld&apos;</span><span class="token punctuation">,</span>
+            component<span class="token punctuation">:</span> HelloWorld
+        <span class="token punctuation">}</span><span class="token punctuation">,</span>
+        <span class="token punctuation">{</span>
+            path<span class="token punctuation">:</span> <span class="token string">&apos;/login&apos;</span><span class="token punctuation">,</span>
+            name<span class="token punctuation">:</span> <span class="token string">&apos;login&apos;</span><span class="token punctuation">,</span>
+            component<span class="token punctuation">:</span> Login<span class="token punctuation">,</span>
+            meta<span class="token punctuation">:</span> <span class="token punctuation">{</span> 
+                guest<span class="token punctuation">:</span> <span class="token boolean">true</span>
+            <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span><span class="token punctuation">,</span>
+        <span class="token punctuation">{</span>
+            path<span class="token punctuation">:</span> <span class="token string">&apos;/register&apos;</span><span class="token punctuation">,</span>
+            name<span class="token punctuation">:</span> <span class="token string">&apos;register&apos;</span><span class="token punctuation">,</span>
+            component<span class="token punctuation">:</span> Register<span class="token punctuation">,</span>
+            meta<span class="token punctuation">:</span> <span class="token punctuation">{</span> 
+                guest<span class="token punctuation">:</span> <span class="token boolean">true</span>
+            <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span><span class="token punctuation">,</span>
+        <span class="token punctuation">{</span>
+            path<span class="token punctuation">:</span> <span class="token string">&apos;/dashboard&apos;</span><span class="token punctuation">,</span>
+            name<span class="token punctuation">:</span> <span class="token string">&apos;userboard&apos;</span><span class="token punctuation">,</span>
+            component<span class="token punctuation">:</span> UserBoard<span class="token punctuation">,</span>
+            meta<span class="token punctuation">:</span> <span class="token punctuation">{</span> 
+                requiresAuth<span class="token punctuation">:</span> <span class="token boolean">true</span>
+            <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span><span class="token punctuation">,</span>
+        <span class="token punctuation">{</span>
+            path<span class="token punctuation">:</span> <span class="token string">&apos;/admin&apos;</span><span class="token punctuation">,</span>
+            name<span class="token punctuation">:</span> <span class="token string">&apos;admin&apos;</span><span class="token punctuation">,</span>
+            component<span class="token punctuation">:</span> Admin<span class="token punctuation">,</span>
+            meta<span class="token punctuation">:</span> <span class="token punctuation">{</span> 
+                requiresAuth<span class="token punctuation">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span>
+                is_admin <span class="token punctuation">:</span> <span class="token boolean">true</span>
+            <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span><span class="token punctuation">,</span>
+    <span class="token punctuation">]</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span></code></pre>
+<p>Vue router allows use define a meta on our routes so we can specify additional behaviour. In our case above, we have defined some routes as guest (which means only users not authenticated should see it), some to require authentication (which means only authenticated users should see it) and the last one to be only accessible to admin users.</p>
+<p>Now, let&apos;s handle requests to these routes based on the meta specification:</p>
+<pre class="language-javascript" data-title="javascript"><code class="language-javascript">router<span class="token punctuation">.</span><span class="token function">beforeEach</span><span class="token punctuation">(</span><span class="token punctuation">(</span>to<span class="token punctuation">,</span> <span class="token keyword">from</span><span class="token punctuation">,</span> next<span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+    <span class="token keyword">if</span><span class="token punctuation">(</span>to<span class="token punctuation">.</span>matched<span class="token punctuation">.</span><span class="token function">some</span><span class="token punctuation">(</span>record <span class="token operator">=&gt;</span> record<span class="token punctuation">.</span>meta<span class="token punctuation">.</span>requiresAuth<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>localStorage<span class="token punctuation">.</span><span class="token function">getItem</span><span class="token punctuation">(</span><span class="token string">&apos;jwt&apos;</span><span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token keyword">null</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token function">next</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+                path<span class="token punctuation">:</span> <span class="token string">&apos;/login&apos;</span><span class="token punctuation">,</span>
+                params<span class="token punctuation">:</span> <span class="token punctuation">{</span> nextUrl<span class="token punctuation">:</span> to<span class="token punctuation">.</span>fullPath <span class="token punctuation">}</span>
+            <span class="token punctuation">}</span><span class="token punctuation">)</span>
+        <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+            <span class="token keyword">let</span> user <span class="token operator">=</span> <span class="token constant">JSON</span><span class="token punctuation">.</span><span class="token function">parse</span><span class="token punctuation">(</span>localStorage<span class="token punctuation">.</span><span class="token function">getItem</span><span class="token punctuation">(</span><span class="token string">&apos;user&apos;</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+            <span class="token keyword">if</span><span class="token punctuation">(</span>to<span class="token punctuation">.</span>matched<span class="token punctuation">.</span><span class="token function">some</span><span class="token punctuation">(</span>record <span class="token operator">=&gt;</span> record<span class="token punctuation">.</span>meta<span class="token punctuation">.</span>is_admin<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                <span class="token keyword">if</span><span class="token punctuation">(</span>user<span class="token punctuation">.</span>is_admin <span class="token operator">==</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+                    <span class="token function">next</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+                <span class="token punctuation">}</span>
+                <span class="token keyword">else</span><span class="token punctuation">{</span>
+                    <span class="token function">next</span><span class="token punctuation">(</span><span class="token punctuation">{</span> name<span class="token punctuation">:</span> <span class="token string">&apos;userboard&apos;</span><span class="token punctuation">}</span><span class="token punctuation">)</span>
+                <span class="token punctuation">}</span>
+            <span class="token punctuation">}</span><span class="token keyword">else</span> <span class="token punctuation">{</span>
+                <span class="token function">next</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+            <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token keyword">if</span><span class="token punctuation">(</span>to<span class="token punctuation">.</span>matched<span class="token punctuation">.</span><span class="token function">some</span><span class="token punctuation">(</span>record <span class="token operator">=&gt;</span> record<span class="token punctuation">.</span>meta<span class="token punctuation">.</span>guest<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span>localStorage<span class="token punctuation">.</span><span class="token function">getItem</span><span class="token punctuation">(</span><span class="token string">&apos;jwt&apos;</span><span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token keyword">null</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+            <span class="token function">next</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+        <span class="token punctuation">}</span>
+        <span class="token keyword">else</span><span class="token punctuation">{</span>
+            <span class="token function">next</span><span class="token punctuation">(</span><span class="token punctuation">{</span> name<span class="token punctuation">:</span> <span class="token string">&apos;userboard&apos;</span><span class="token punctuation">}</span><span class="token punctuation">)</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span><span class="token keyword">else</span> <span class="token punctuation">{</span>
+        <span class="token function">next</span><span class="token punctuation">(</span><span class="token punctuation">)</span> 
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span>
+
+<span class="token keyword">export</span> <span class="token keyword">default</span> router</code></pre>
+<p>Vue-router has a beforeEach method that is called before each route is processed. This is where we can define our checking condition and restrict user access. The method takes three parameters &#x2014; to, from and next. <code>to</code> is where the user wishes to go, <code>from</code> is where the user is coming from, <code>next</code> is a callback function that continues the processing of the user request. Our check is on the <code>to</code> object. </p>
+<p>We check a few things:</p>
+<ul>
+<li>if route <code>requiresAuth</code>, check for a <code>jwt</code> token showing the user is logged in.</li>
+<li>if route <code>requiresAuth</code> and is only for admin users, check for auth and check if the user is an admin</li>
+<li>if route requires <code>guest</code>, check if the user is logged in</li>
+</ul>
+<p>We redirect the user based on what we are checking for. We use the name of the route to redirect, so check to be sure you are using this for your application. </p>
+<blockquote>
+<p><strong>IMPORTANT:</strong> Always ensure you have <code>next()</code> called at the end of every condition you are checking. This is to prevent your application from failing in the event that there is a condition you forgot to check.</p>
+</blockquote>
+<h2 id="toc-define-some-components">
+<a href="#toc-define-some-components">Define Some Components</a>
+</h2>
+<p>To test out what we have built, let&#x2019;s define a few components. In the <code>./src/components/</code> directory, open the <code>HelloWorld.vue</code> file and add the following:</p>
+<pre class="language-javascript" data-title="javascript"><code class="language-javascript"><span class="token operator">&lt;</span>template<span class="token operator">&gt;</span>
+    <span class="token operator">&lt;</span>div <span class="token keyword">class</span><span class="token operator">=</span><span class="token string">&quot;hello&quot;</span><span class="token operator">&gt;</span>
+        <span class="token operator">&lt;</span>h1<span class="token operator">&gt;</span>This is homepage<span class="token operator">&lt;</span><span class="token operator">/</span>h1<span class="token operator">&gt;</span>
+        <span class="token operator">&lt;</span>h2<span class="token operator">&gt;</span><span class="token punctuation">{</span><span class="token punctuation">{</span>msg<span class="token punctuation">}</span><span class="token punctuation">}</span><span class="token operator">&lt;</span><span class="token operator">/</span>h2<span class="token operator">&gt;</span>
+    <span class="token operator">&lt;</span><span class="token operator">/</span>div<span class="token operator">&gt;</span>
+<span class="token operator">&lt;</span><span class="token operator">/</span>template<span class="token operator">&gt;</span>
+
+<span class="token operator">&lt;</span>script<span class="token operator">&gt;</span>
+    <span class="token keyword">export</span> <span class="token keyword">default</span> <span class="token punctuation">{</span>
+        <span class="token function">data</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token keyword">return</span> <span class="token punctuation">{</span>
+                msg<span class="token punctuation">:</span> <span class="token string">&apos;Hello World!&apos;</span>
+            <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+<span class="token operator">&lt;</span><span class="token operator">/</span>script<span class="token operator">&gt;</span>
+    <span class="token operator">&lt;</span><span class="token operator">!</span><span class="token operator">--</span> Add <span class="token string">&quot;scoped&quot;</span> attribute to limit <span class="token constant">CSS</span> to <span class="token keyword">this</span> component only <span class="token operator">--</span><span class="token operator">&gt;</span>
+<span class="token operator">&lt;</span>style scoped<span class="token operator">&gt;</span>
+    h1<span class="token punctuation">,</span> h2 <span class="token punctuation">{</span>
+        font<span class="token operator">-</span>weight<span class="token punctuation">:</span> normal<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    ul <span class="token punctuation">{</span>
+        list<span class="token operator">-</span>style<span class="token operator">-</span>type<span class="token punctuation">:</span> none<span class="token punctuation">;</span>
+        padding<span class="token punctuation">:</span> <span class="token number">0</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    li <span class="token punctuation">{</span>
+        display<span class="token punctuation">:</span> inline<span class="token operator">-</span>block<span class="token punctuation">;</span>
+        margin<span class="token punctuation">:</span> <span class="token number">0</span> <span class="token number">10</span>px<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    a <span class="token punctuation">{</span>
+        color<span class="token punctuation">:</span> #<span class="token number">42</span>b983<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token operator">&lt;</span><span class="token operator">/</span>style<span class="token operator">&gt;</span></code></pre>
+<p>Create a new file <code>Login.vue</code> in the same directory and add the following:</p>
+<pre class="language-javascript" data-title="javascript"><code class="language-javascript"><span class="token operator">&lt;</span>template<span class="token operator">&gt;</span>
+    <span class="token operator">&lt;</span>div<span class="token operator">&gt;</span>
+        <span class="token operator">&lt;</span>h4<span class="token operator">&gt;</span>Login<span class="token operator">&lt;</span><span class="token operator">/</span>h4<span class="token operator">&gt;</span>
+        <span class="token operator">&lt;</span>form<span class="token operator">&gt;</span>
+            <span class="token operator">&lt;</span>label <span class="token keyword">for</span><span class="token operator">=</span><span class="token string">&quot;email&quot;</span> <span class="token operator">&gt;</span><span class="token constant">E</span><span class="token operator">-</span>Mail Address<span class="token operator">&lt;</span><span class="token operator">/</span>label<span class="token operator">&gt;</span>
+            <span class="token operator">&lt;</span>div<span class="token operator">&gt;</span>
+                <span class="token operator">&lt;</span>input id<span class="token operator">=</span><span class="token string">&quot;email&quot;</span> type<span class="token operator">=</span><span class="token string">&quot;email&quot;</span> v<span class="token operator">-</span>model<span class="token operator">=</span><span class="token string">&quot;email&quot;</span> required autofocus<span class="token operator">&gt;</span>
+            <span class="token operator">&lt;</span><span class="token operator">/</span>div<span class="token operator">&gt;</span>
+            <span class="token operator">&lt;</span>div<span class="token operator">&gt;</span>
+                <span class="token operator">&lt;</span>label <span class="token keyword">for</span><span class="token operator">=</span><span class="token string">&quot;password&quot;</span> <span class="token operator">&gt;</span>Password<span class="token operator">&lt;</span><span class="token operator">/</span>label<span class="token operator">&gt;</span>
+                <span class="token operator">&lt;</span>div<span class="token operator">&gt;</span>
+                    <span class="token operator">&lt;</span>input id<span class="token operator">=</span><span class="token string">&quot;password&quot;</span> type<span class="token operator">=</span><span class="token string">&quot;password&quot;</span> v<span class="token operator">-</span>model<span class="token operator">=</span><span class="token string">&quot;password&quot;</span> required<span class="token operator">&gt;</span>
+                <span class="token operator">&lt;</span><span class="token operator">/</span>div<span class="token operator">&gt;</span>
+            <span class="token operator">&lt;</span><span class="token operator">/</span>div<span class="token operator">&gt;</span>
+            <span class="token operator">&lt;</span>div<span class="token operator">&gt;</span>
+                <span class="token operator">&lt;</span>button type<span class="token operator">=</span><span class="token string">&quot;submit&quot;</span> @click<span class="token operator">=</span><span class="token string">&quot;handleSubmit&quot;</span><span class="token operator">&gt;</span>
+                    Login
+                <span class="token operator">&lt;</span><span class="token operator">/</span>button<span class="token operator">&gt;</span>
+            <span class="token operator">&lt;</span><span class="token operator">/</span>div<span class="token operator">&gt;</span>
+        <span class="token operator">&lt;</span><span class="token operator">/</span>form<span class="token operator">&gt;</span>
+    <span class="token operator">&lt;</span><span class="token operator">/</span>div<span class="token operator">&gt;</span>
+<span class="token operator">&lt;</span><span class="token operator">/</span>template<span class="token operator">&gt;</span></code></pre>
+<p>That is for the HTML template. Now, let&apos;s define the script handling login:</p>
+<pre class="language-javascript" data-title="javascript"><code class="language-javascript"><span class="token operator">&lt;</span>script<span class="token operator">&gt;</span>
+    <span class="token keyword">export</span> <span class="token keyword">default</span> <span class="token punctuation">{</span>
+        <span class="token function">data</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+            <span class="token keyword">return</span> <span class="token punctuation">{</span>
+                email <span class="token punctuation">:</span> <span class="token string">&quot;&quot;</span><span class="token punctuation">,</span>
+                password <span class="token punctuation">:</span> <span class="token string">&quot;&quot;</span>
+            <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span><span class="token punctuation">,</span>
+        methods <span class="token punctuation">:</span> <span class="token punctuation">{</span>
+            <span class="token function">handleSubmit</span><span class="token punctuation">(</span>e<span class="token punctuation">)</span><span class="token punctuation">{</span>
+                e<span class="token punctuation">.</span><span class="token function">preventDefault</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+                <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>password<span class="token punctuation">.</span>length <span class="token operator">&gt;</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                    <span class="token keyword">this</span><span class="token punctuation">.</span>$http<span class="token punctuation">.</span><span class="token function">post</span><span class="token punctuation">(</span><span class="token string">&apos;http://localhost:3000/login&apos;</span><span class="token punctuation">,</span> <span class="token punctuation">{</span>
+                        email<span class="token punctuation">:</span> <span class="token keyword">this</span><span class="token punctuation">.</span>email<span class="token punctuation">,</span>
+                        password<span class="token punctuation">:</span> <span class="token keyword">this</span><span class="token punctuation">.</span>password
+                    <span class="token punctuation">}</span><span class="token punctuation">)</span>
+                    <span class="token punctuation">.</span><span class="token function">then</span><span class="token punctuation">(</span>response <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+
+                    <span class="token punctuation">}</span><span class="token punctuation">)</span>
+                    <span class="token punctuation">.</span><span class="token keyword">catch</span><span class="token punctuation">(</span><span class="token keyword">function</span> <span class="token punctuation">(</span>error<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                        console<span class="token punctuation">.</span><span class="token function">error</span><span class="token punctuation">(</span>error<span class="token punctuation">.</span>response<span class="token punctuation">)</span><span class="token punctuation">;</span>
+                    <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                <span class="token punctuation">}</span>
+            <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+<span class="token operator">&lt;</span><span class="token operator">/</span>script<span class="token operator">&gt;</span></code></pre>
+<p>At this point, we have the <code>email</code> and <code>password</code> data attributes bound to the form fields to collect user input. We made a request to the server to authenticate the credentials the user supplies. </p>
+<p>Now, let&apos;s use the response from the server:</p>
+<pre class="language-javascript" data-title="javascript"><code class="language-javascript"><span class="token punctuation">[</span><span class="token operator">...</span><span class="token punctuation">]</span>
+methods <span class="token punctuation">:</span> <span class="token punctuation">{</span>
+            <span class="token function">handleSubmit</span><span class="token punctuation">(</span>e<span class="token punctuation">)</span><span class="token punctuation">{</span>
+                <span class="token punctuation">[</span><span class="token operator">...</span><span class="token punctuation">]</span>
+                    <span class="token punctuation">.</span><span class="token function">then</span><span class="token punctuation">(</span>response <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+                        <span class="token keyword">let</span> is_admin <span class="token operator">=</span> response<span class="token punctuation">.</span>data<span class="token punctuation">.</span>user<span class="token punctuation">.</span>is_admin
+                        localStorage<span class="token punctuation">.</span><span class="token function">setItem</span><span class="token punctuation">(</span><span class="token string">&apos;user&apos;</span><span class="token punctuation">,</span><span class="token constant">JSON</span><span class="token punctuation">.</span><span class="token function">stringify</span><span class="token punctuation">(</span>response<span class="token punctuation">.</span>data<span class="token punctuation">.</span>user<span class="token punctuation">)</span><span class="token punctuation">)</span>
+                        localStorage<span class="token punctuation">.</span><span class="token function">setItem</span><span class="token punctuation">(</span><span class="token string">&apos;jwt&apos;</span><span class="token punctuation">,</span>response<span class="token punctuation">.</span>data<span class="token punctuation">.</span>token<span class="token punctuation">)</span>
+
+                        <span class="token keyword">if</span> <span class="token punctuation">(</span>localStorage<span class="token punctuation">.</span><span class="token function">getItem</span><span class="token punctuation">(</span><span class="token string">&apos;jwt&apos;</span><span class="token punctuation">)</span> <span class="token operator">!=</span> <span class="token keyword">null</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+                            <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">$emit</span><span class="token punctuation">(</span><span class="token string">&apos;loggedIn&apos;</span><span class="token punctuation">)</span>
+                            <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>$route<span class="token punctuation">.</span>params<span class="token punctuation">.</span>nextUrl <span class="token operator">!=</span> <span class="token keyword">null</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+                                <span class="token keyword">this</span><span class="token punctuation">.</span>$router<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>$route<span class="token punctuation">.</span>params<span class="token punctuation">.</span>nextUrl<span class="token punctuation">)</span>
+                            <span class="token punctuation">}</span>
+                            <span class="token keyword">else</span> <span class="token punctuation">{</span>
+                                <span class="token keyword">if</span><span class="token punctuation">(</span>is_admin<span class="token operator">==</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+                                    <span class="token keyword">this</span><span class="token punctuation">.</span>$router<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span><span class="token string">&apos;admin&apos;</span><span class="token punctuation">)</span>
+                                <span class="token punctuation">}</span>
+                                <span class="token keyword">else</span> <span class="token punctuation">{</span>
+                                    <span class="token keyword">this</span><span class="token punctuation">.</span>$router<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span><span class="token string">&apos;dashboard&apos;</span><span class="token punctuation">)</span>
+                                <span class="token punctuation">}</span>
+                            <span class="token punctuation">}</span>
+                        <span class="token punctuation">}</span>
+                    <span class="token punctuation">}</span><span class="token punctuation">)</span>
+                   <span class="token punctuation">[</span><span class="token operator">...</span><span class="token punctuation">]</span>
+                <span class="token punctuation">}</span>
+            <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span></code></pre>
+<p>We store the <code>jwt</code> token and <code>user</code> information in localStorage so we can access it from all parts of our application. Of course, we redirect the user to whichever part of our application they tried to access before being redirected to login. If they came to login directory, we redirect them based on the user type. </p>
+<p>If you are not familiar with composing vue components, you can take this <a href="https://scotch.io/courses/getting-started-with-vue">Getting Started With Vue</a> course.</p>
+<p>Next, create a <code>Register.vue</code> file and add the following to it:</p>
+<pre class="language-javascript" data-title="javascript"><code class="language-javascript"><span class="token operator">&lt;</span>template<span class="token operator">&gt;</span>
+    <span class="token operator">&lt;</span>div<span class="token operator">&gt;</span>
+        <span class="token operator">&lt;</span>h4<span class="token operator">&gt;</span>Register<span class="token operator">&lt;</span><span class="token operator">/</span>h4<span class="token operator">&gt;</span>
+        <span class="token operator">&lt;</span>form<span class="token operator">&gt;</span>
+            <span class="token operator">&lt;</span>label <span class="token keyword">for</span><span class="token operator">=</span><span class="token string">&quot;name&quot;</span><span class="token operator">&gt;</span>Name<span class="token operator">&lt;</span><span class="token operator">/</span>label<span class="token operator">&gt;</span>
+            <span class="token operator">&lt;</span>div<span class="token operator">&gt;</span>
+                <span class="token operator">&lt;</span>input id<span class="token operator">=</span><span class="token string">&quot;name&quot;</span> type<span class="token operator">=</span><span class="token string">&quot;text&quot;</span> v<span class="token operator">-</span>model<span class="token operator">=</span><span class="token string">&quot;name&quot;</span> required autofocus<span class="token operator">&gt;</span>
+            <span class="token operator">&lt;</span><span class="token operator">/</span>div<span class="token operator">&gt;</span>
+
+            <span class="token operator">&lt;</span>label <span class="token keyword">for</span><span class="token operator">=</span><span class="token string">&quot;email&quot;</span> <span class="token operator">&gt;</span><span class="token constant">E</span><span class="token operator">-</span>Mail Address<span class="token operator">&lt;</span><span class="token operator">/</span>label<span class="token operator">&gt;</span>
+            <span class="token operator">&lt;</span>div<span class="token operator">&gt;</span>
+                <span class="token operator">&lt;</span>input id<span class="token operator">=</span><span class="token string">&quot;email&quot;</span> type<span class="token operator">=</span><span class="token string">&quot;email&quot;</span> v<span class="token operator">-</span>model<span class="token operator">=</span><span class="token string">&quot;email&quot;</span> required<span class="token operator">&gt;</span>
+            <span class="token operator">&lt;</span><span class="token operator">/</span>div<span class="token operator">&gt;</span>
+
+            <span class="token operator">&lt;</span>label <span class="token keyword">for</span><span class="token operator">=</span><span class="token string">&quot;password&quot;</span><span class="token operator">&gt;</span>Password<span class="token operator">&lt;</span><span class="token operator">/</span>label<span class="token operator">&gt;</span>
+            <span class="token operator">&lt;</span>div<span class="token operator">&gt;</span>
+                <span class="token operator">&lt;</span>input id<span class="token operator">=</span><span class="token string">&quot;password&quot;</span> type<span class="token operator">=</span><span class="token string">&quot;password&quot;</span> v<span class="token operator">-</span>model<span class="token operator">=</span><span class="token string">&quot;password&quot;</span> required<span class="token operator">&gt;</span>
+            <span class="token operator">&lt;</span><span class="token operator">/</span>div<span class="token operator">&gt;</span>
+
+            <span class="token operator">&lt;</span>label <span class="token keyword">for</span><span class="token operator">=</span><span class="token string">&quot;password-confirm&quot;</span><span class="token operator">&gt;</span>Confirm Password<span class="token operator">&lt;</span><span class="token operator">/</span>label<span class="token operator">&gt;</span>
+            <span class="token operator">&lt;</span>div<span class="token operator">&gt;</span>
+                <span class="token operator">&lt;</span>input id<span class="token operator">=</span><span class="token string">&quot;password-confirm&quot;</span> type<span class="token operator">=</span><span class="token string">&quot;password&quot;</span> v<span class="token operator">-</span>model<span class="token operator">=</span><span class="token string">&quot;password_confirmation&quot;</span> required<span class="token operator">&gt;</span>
+            <span class="token operator">&lt;</span><span class="token operator">/</span>div<span class="token operator">&gt;</span>
+
+            <span class="token operator">&lt;</span>label <span class="token keyword">for</span><span class="token operator">=</span><span class="token string">&quot;password-confirm&quot;</span><span class="token operator">&gt;</span>Is <span class="token keyword">this</span> an administrator account<span class="token operator">?</span><span class="token operator">&lt;</span><span class="token operator">/</span>label<span class="token operator">&gt;</span>
+            <span class="token operator">&lt;</span>div<span class="token operator">&gt;</span>
+                <span class="token operator">&lt;</span>select v<span class="token operator">-</span>model<span class="token operator">=</span><span class="token string">&quot;is_admin&quot;</span><span class="token operator">&gt;</span>
+                    <span class="token operator">&lt;</span>option value<span class="token operator">=</span><span class="token number">1</span><span class="token operator">&gt;</span>Yes<span class="token operator">&lt;</span><span class="token operator">/</span>option<span class="token operator">&gt;</span>
+                    <span class="token operator">&lt;</span>option value<span class="token operator">=</span><span class="token number">0</span><span class="token operator">&gt;</span>No<span class="token operator">&lt;</span><span class="token operator">/</span>option<span class="token operator">&gt;</span>
+                <span class="token operator">&lt;</span><span class="token operator">/</span>select<span class="token operator">&gt;</span>
+            <span class="token operator">&lt;</span><span class="token operator">/</span>div<span class="token operator">&gt;</span>
+
+            <span class="token operator">&lt;</span>div<span class="token operator">&gt;</span>
+                <span class="token operator">&lt;</span>button type<span class="token operator">=</span><span class="token string">&quot;submit&quot;</span> @click<span class="token operator">=</span><span class="token string">&quot;handleSubmit&quot;</span><span class="token operator">&gt;</span>
+                    Register
+                <span class="token operator">&lt;</span><span class="token operator">/</span>button<span class="token operator">&gt;</span>
+            <span class="token operator">&lt;</span><span class="token operator">/</span>div<span class="token operator">&gt;</span>
+        <span class="token operator">&lt;</span><span class="token operator">/</span>form<span class="token operator">&gt;</span>
+    <span class="token operator">&lt;</span><span class="token operator">/</span>div<span class="token operator">&gt;</span>
+<span class="token operator">&lt;</span><span class="token operator">/</span>template<span class="token operator">&gt;</span></code></pre>
+<p>Now, define the script handling registration:</p>
+<pre class="language-javascript" data-title="javascript"><code class="language-javascript"><span class="token operator">&lt;</span>script<span class="token operator">&gt;</span>
+    <span class="token keyword">export</span> <span class="token keyword">default</span> <span class="token punctuation">{</span>
+        props <span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token string">&quot;nextUrl&quot;</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+        <span class="token function">data</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+            <span class="token keyword">return</span> <span class="token punctuation">{</span>
+                name <span class="token punctuation">:</span> <span class="token string">&quot;&quot;</span><span class="token punctuation">,</span>
+                email <span class="token punctuation">:</span> <span class="token string">&quot;&quot;</span><span class="token punctuation">,</span>
+                password <span class="token punctuation">:</span> <span class="token string">&quot;&quot;</span><span class="token punctuation">,</span>
+                password_confirmation <span class="token punctuation">:</span> <span class="token string">&quot;&quot;</span><span class="token punctuation">,</span>
+                is_admin <span class="token punctuation">:</span> <span class="token keyword">null</span>
+            <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span><span class="token punctuation">,</span>
+        methods <span class="token punctuation">:</span> <span class="token punctuation">{</span>
+            <span class="token function">handleSubmit</span><span class="token punctuation">(</span>e<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                e<span class="token punctuation">.</span><span class="token function">preventDefault</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+                <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>password <span class="token operator">===</span> <span class="token keyword">this</span><span class="token punctuation">.</span>password_confirmation <span class="token operator">&amp;&amp;</span> <span class="token keyword">this</span><span class="token punctuation">.</span>password<span class="token punctuation">.</span>length <span class="token operator">&gt;</span> <span class="token number">0</span><span class="token punctuation">)</span>
+                <span class="token punctuation">{</span>
+                    <span class="token keyword">let</span> url <span class="token operator">=</span> <span class="token string">&quot;http://localhost:3000/register&quot;</span>
+                    <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>is_admin <span class="token operator">!=</span> <span class="token keyword">null</span> <span class="token operator">||</span> <span class="token keyword">this</span><span class="token punctuation">.</span>is_admin <span class="token operator">==</span> <span class="token number">1</span><span class="token punctuation">)</span> url <span class="token operator">=</span> <span class="token string">&quot;http://localhost:3000/register-admin&quot;</span>
+                    <span class="token keyword">this</span><span class="token punctuation">.</span>$http<span class="token punctuation">.</span><span class="token function">post</span><span class="token punctuation">(</span>url<span class="token punctuation">,</span> <span class="token punctuation">{</span>
+                        name<span class="token punctuation">:</span> <span class="token keyword">this</span><span class="token punctuation">.</span>name<span class="token punctuation">,</span>
+                        email<span class="token punctuation">:</span> <span class="token keyword">this</span><span class="token punctuation">.</span>email<span class="token punctuation">,</span>
+                        password<span class="token punctuation">:</span> <span class="token keyword">this</span><span class="token punctuation">.</span>password<span class="token punctuation">,</span>
+                        is_admin<span class="token punctuation">:</span> <span class="token keyword">this</span><span class="token punctuation">.</span>is_admin
+                    <span class="token punctuation">}</span><span class="token punctuation">)</span>
+                    <span class="token punctuation">.</span><span class="token function">then</span><span class="token punctuation">(</span>response <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+                        localStorage<span class="token punctuation">.</span><span class="token function">setItem</span><span class="token punctuation">(</span><span class="token string">&apos;user&apos;</span><span class="token punctuation">,</span><span class="token constant">JSON</span><span class="token punctuation">.</span><span class="token function">stringify</span><span class="token punctuation">(</span>response<span class="token punctuation">.</span>data<span class="token punctuation">.</span>user<span class="token punctuation">)</span><span class="token punctuation">)</span>
+                        localStorage<span class="token punctuation">.</span><span class="token function">setItem</span><span class="token punctuation">(</span><span class="token string">&apos;jwt&apos;</span><span class="token punctuation">,</span>response<span class="token punctuation">.</span>data<span class="token punctuation">.</span>token<span class="token punctuation">)</span>
+
+                        <span class="token keyword">if</span> <span class="token punctuation">(</span>localStorage<span class="token punctuation">.</span><span class="token function">getItem</span><span class="token punctuation">(</span><span class="token string">&apos;jwt&apos;</span><span class="token punctuation">)</span> <span class="token operator">!=</span> <span class="token keyword">null</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+                            <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">$emit</span><span class="token punctuation">(</span><span class="token string">&apos;loggedIn&apos;</span><span class="token punctuation">)</span>
+                            <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>$route<span class="token punctuation">.</span>params<span class="token punctuation">.</span>nextUrl <span class="token operator">!=</span> <span class="token keyword">null</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+                                <span class="token keyword">this</span><span class="token punctuation">.</span>$router<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>$route<span class="token punctuation">.</span>params<span class="token punctuation">.</span>nextUrl<span class="token punctuation">)</span>
+                            <span class="token punctuation">}</span>
+                            <span class="token keyword">else</span><span class="token punctuation">{</span>
+                                <span class="token keyword">this</span><span class="token punctuation">.</span>$router<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span><span class="token string">&apos;/&apos;</span><span class="token punctuation">)</span>
+                            <span class="token punctuation">}</span>
+                        <span class="token punctuation">}</span>
+                    <span class="token punctuation">}</span><span class="token punctuation">)</span>
+                    <span class="token punctuation">.</span><span class="token keyword">catch</span><span class="token punctuation">(</span>error <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+                        console<span class="token punctuation">.</span><span class="token function">error</span><span class="token punctuation">(</span>error<span class="token punctuation">)</span><span class="token punctuation">;</span>
+                    <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+                    <span class="token keyword">this</span><span class="token punctuation">.</span>password <span class="token operator">=</span> <span class="token string">&quot;&quot;</span>
+                    <span class="token keyword">this</span><span class="token punctuation">.</span>passwordConfirm <span class="token operator">=</span> <span class="token string">&quot;&quot;</span>
+
+                    <span class="token keyword">return</span> <span class="token function">alert</span><span class="token punctuation">(</span><span class="token string">&quot;Passwords do not match&quot;</span><span class="token punctuation">)</span>
+                <span class="token punctuation">}</span>
+            <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+<span class="token operator">&lt;</span><span class="token operator">/</span>script<span class="token operator">&gt;</span></code></pre>
+<p>This is similar in structure to the <code>Login.vue</code> file. It creates the register component and accompanying method to handle user submission of the registration form.</p>
+<p>Now, create the file <code>Admin.vue</code> and add the following:</p>
+<pre class="language-javascript" data-title="javascript"><code class="language-javascript"><span class="token operator">&lt;</span>template<span class="token operator">&gt;</span>
+    <span class="token operator">&lt;</span>div <span class="token keyword">class</span><span class="token operator">=</span><span class="token string">&quot;hello&quot;</span><span class="token operator">&gt;</span>
+        <span class="token operator">&lt;</span>h1<span class="token operator">&gt;</span>Welcome to administrator page<span class="token operator">&lt;</span><span class="token operator">/</span>h1<span class="token operator">&gt;</span>
+        <span class="token operator">&lt;</span>h2<span class="token operator">&gt;</span><span class="token punctuation">{</span><span class="token punctuation">{</span>msg<span class="token punctuation">}</span><span class="token punctuation">}</span><span class="token operator">&lt;</span><span class="token operator">/</span>h2<span class="token operator">&gt;</span>
+    <span class="token operator">&lt;</span><span class="token operator">/</span>div<span class="token operator">&gt;</span>
+<span class="token operator">&lt;</span><span class="token operator">/</span>template<span class="token operator">&gt;</span>
+
+<span class="token operator">&lt;</span>script<span class="token operator">&gt;</span>
+    <span class="token keyword">export</span> <span class="token keyword">default</span> <span class="token punctuation">{</span>
+        <span class="token function">data</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token keyword">return</span> <span class="token punctuation">{</span>
+                msg<span class="token punctuation">:</span> <span class="token string">&apos;The superheros&apos;</span>
+            <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+<span class="token operator">&lt;</span><span class="token operator">/</span>script<span class="token operator">&gt;</span>
+<span class="token operator">&lt;</span>style scoped<span class="token operator">&gt;</span>
+    h1<span class="token punctuation">,</span> h2 <span class="token punctuation">{</span>
+        font<span class="token operator">-</span>weight<span class="token punctuation">:</span> normal<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    ul <span class="token punctuation">{</span>
+        list<span class="token operator">-</span>style<span class="token operator">-</span>type<span class="token punctuation">:</span> none<span class="token punctuation">;</span>
+        padding<span class="token punctuation">:</span> <span class="token number">0</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    li <span class="token punctuation">{</span>
+        display<span class="token punctuation">:</span> inline<span class="token operator">-</span>block<span class="token punctuation">;</span>
+        margin<span class="token punctuation">:</span> <span class="token number">0</span> <span class="token number">10</span>px<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    a <span class="token punctuation">{</span>
+        color<span class="token punctuation">:</span> #<span class="token number">42</span>b983<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token operator">&lt;</span><span class="token operator">/</span>style<span class="token operator">&gt;</span></code></pre>
+<p>This is the component we will mount when a user visits the admin page.</p>
+<p>Finally, create the file <code>UserBoard.vue</code> and add the following:</p>
+<pre class="language-javascript" data-title="javascript"><code class="language-javascript"><span class="token operator">&lt;</span>template<span class="token operator">&gt;</span>
+    <span class="token operator">&lt;</span>div <span class="token keyword">class</span><span class="token operator">=</span><span class="token string">&quot;hello&quot;</span><span class="token operator">&gt;</span>
+        <span class="token operator">&lt;</span>h1<span class="token operator">&gt;</span>Welcome to regular users page<span class="token operator">&lt;</span><span class="token operator">/</span>h1<span class="token operator">&gt;</span>
+        <span class="token operator">&lt;</span>h2<span class="token operator">&gt;</span><span class="token punctuation">{</span><span class="token punctuation">{</span>msg<span class="token punctuation">}</span><span class="token punctuation">}</span><span class="token operator">&lt;</span><span class="token operator">/</span>h2<span class="token operator">&gt;</span>
+    <span class="token operator">&lt;</span><span class="token operator">/</span>div<span class="token operator">&gt;</span>
+<span class="token operator">&lt;</span><span class="token operator">/</span>template<span class="token operator">&gt;</span>
+
+<span class="token operator">&lt;</span>script<span class="token operator">&gt;</span>
+    <span class="token keyword">export</span> <span class="token keyword">default</span> <span class="token punctuation">{</span>
+        <span class="token function">data</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token keyword">return</span> <span class="token punctuation">{</span>
+                msg<span class="token punctuation">:</span> <span class="token string">&apos;The commoners&apos;</span>
+            <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+<span class="token operator">&lt;</span><span class="token operator">/</span>script<span class="token operator">&gt;</span>
+
+<span class="token operator">&lt;</span><span class="token operator">!</span><span class="token operator">--</span> Add <span class="token string">&quot;scoped&quot;</span> attribute to limit <span class="token constant">CSS</span> to <span class="token keyword">this</span> component only <span class="token operator">--</span><span class="token operator">&gt;</span>
+<span class="token operator">&lt;</span>style scoped<span class="token operator">&gt;</span>
+    h1<span class="token punctuation">,</span> h2 <span class="token punctuation">{</span>
+        font<span class="token operator">-</span>weight<span class="token punctuation">:</span> normal<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    ul <span class="token punctuation">{</span>
+        list<span class="token operator">-</span>style<span class="token operator">-</span>type<span class="token punctuation">:</span> none<span class="token punctuation">;</span>
+        padding<span class="token punctuation">:</span> <span class="token number">0</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    li <span class="token punctuation">{</span>
+        display<span class="token punctuation">:</span> inline<span class="token operator">-</span>block<span class="token punctuation">;</span>
+        margin<span class="token punctuation">:</span> <span class="token number">0</span> <span class="token number">10</span>px<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    a <span class="token punctuation">{</span>
+        color<span class="token punctuation">:</span> #<span class="token number">42</span>b983<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token operator">&lt;</span><span class="token operator">/</span>style<span class="token operator">&gt;</span></code></pre>
+<p>This is the file we will see when a user visits the dashboard page.</p>
+<p>And that&#x2019;s it for components.</p>
+<h2 id="toc-setting-up-axios-globally">
+<a href="#toc-setting-up-axios-globally">Setting Up Axios Globally</a>
+</h2>
+<p>For all our server requests, we will use <a href="https://github.com/axios/axios">axios</a>. Axios is a promise based HTTP client for the browser and node.js. Run the following command to install axios:</p>
+<pre class="language-bash" data-title="bash"><code class="language-bash">$ <span class="token function">npm</span> <span class="token function">install</span> --save axios</code></pre>
+<p>To make it accessible across all our components, open the <code>./src/main.js</code> file and add the following:</p>
+<pre class="language-javascript" data-title="javascript"><code class="language-javascript"><span class="token keyword">import</span> Vue <span class="token keyword">from</span> <span class="token string">&apos;vue&apos;</span>
+<span class="token keyword">import</span> App <span class="token keyword">from</span> <span class="token string">&apos;./App&apos;</span>
+<span class="token keyword">import</span> router <span class="token keyword">from</span> <span class="token string">&apos;./router&apos;</span>
+<span class="token keyword">import</span> Axios <span class="token keyword">from</span> <span class="token string">&apos;axios&apos;</span>
+
+Vue<span class="token punctuation">.</span>prototype<span class="token punctuation">.</span>$http <span class="token operator">=</span> Axios<span class="token punctuation">;</span>
+
+Vue<span class="token punctuation">.</span>config<span class="token punctuation">.</span>productionTip <span class="token operator">=</span> <span class="token boolean">false</span>
+
+<span class="token keyword">new</span> <span class="token class-name">Vue</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+    el<span class="token punctuation">:</span> <span class="token string">&apos;#app&apos;</span><span class="token punctuation">,</span>
+    router<span class="token punctuation">,</span>
+    components<span class="token punctuation">:</span> <span class="token punctuation">{</span> App <span class="token punctuation">}</span><span class="token punctuation">,</span>
+    template<span class="token punctuation">:</span> <span class="token string">&apos;&lt;App/&gt;&apos;</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span></code></pre>
+<p>By defining <code>Vue.prototype.$http = Axios</code> we have modified the vue engine and added axios. We can now use axios in all our components like <code>this.$http</code>.</p>
+<h2 id="toc-running-the-application">
+<a href="#toc-running-the-application">Running The Application</a>
+</h2>
+<p>Now that we are done with the application, we need to build all our assets and run it. Because we have a node js server along with our vue application, we will be both of them for our application to work. </p>
+<p>Let&#x2019;s add a script that will help us run our node server. Open the <code>package.json</code> file and add the following:</p>
+<pre class="language-json" data-title="json"><code class="language-json"><span class="token punctuation">[</span>...<span class="token punctuation">]</span>
+<span class="token property">&quot;scripts&quot;</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+    <span class="token property">&quot;dev&quot;</span><span class="token operator">:</span> <span class="token string">&quot;webpack-dev-server --inline --progress --config build/webpack.dev.conf.js&quot;</span><span class="token punctuation">,</span>
+    <span class="token property">&quot;start&quot;</span><span class="token operator">:</span> <span class="token string">&quot;npm run dev&quot;</span><span class="token punctuation">,</span>
+    <span class="token property">&quot;server&quot;</span><span class="token operator">:</span> <span class="token string">&quot;node server/app&quot;</span><span class="token punctuation">,</span>
+    <span class="token property">&quot;build&quot;</span><span class="token operator">:</span> <span class="token string">&quot;node build/build.js&quot;</span>
+  <span class="token punctuation">}</span><span class="token punctuation">,</span>
+<span class="token punctuation">[</span>...<span class="token punctuation">]</span></code></pre>
+<p>We added the <code>server</code> script to help us start up the node server. Now, run the following command to start the server:</p>
+<pre class="language-bash" data-title="bash"><code class="language-bash">$ <span class="token function">npm</span> run server</code></pre>
+<p>You should see something like this:</p>
+<p><img alt="" data-src="https://d2mxuefqeaa7sj.cloudfront.net/s_A0B726BC83B447034F78CE71432FC6C8BA702FFB783758ECCB3A694E7AC65160_1530686129606_image.png"></p>
+<p>Then create another terminal instance and run the vue app like this:</p>
+<pre class="language-bash" data-title="bash"><code class="language-bash">$ <span class="token function">npm</span> run dev</code></pre>
+<p>This will build all the assets and st
+art the application. You can open the link it shows you to see the application</p>
+<p><img alt="Homepage" data-src="https://d2mxuefqeaa7sj.cloudfront.net/s_A0B726BC83B447034F78CE71432FC6C8BA702FFB783758ECCB3A694E7AC65160_1530686246716_image.png"></p>
+<p><img alt="Login" data-src="https://d2mxuefqeaa7sj.cloudfront.net/s_A0B726BC83B447034F78CE71432FC6C8BA702FFB783758ECCB3A694E7AC65160_1530686275249_image.png"></p>
+<h2 id="toc-conclusion">
+<a href="#toc-conclusion">Conclusion</a>
+</h2>
+<p>In this guide, we have seen how to use vue-router to define checks on our routes and prevent users from accessing certain routes. We also saw how to redirect users to different parts of our application based on the authentication state. We also built a mini server with Node.js to handle user authentication.</p>
+<p>What we did is an example of how access control is designed in frameworks like Laravel. You can checkout out <a href="https://router.vuejs.org">vue-router</a> and see what other cool things you can do with it.</p>
+</div>
+<p class="m-t-md">
+Like this article?
+<a href="https://twitter.com/codebeast" title="Follow @codebeast on Twitter">
+Follow @codebeast on Twitter
+</a>
+</p>
+<div class="related-posts-container">
+<h4 class="title is-5 up-next">Read next...</h4>
+<div class="related-posts">
+<a class="related-post" href="/tutorials/use-vuejs-data-binding-options-for-reactive-applications">
+<span class="main-tag">vue</span>
+Use Vue.js Data Binding Options for Reactive Applications
+</a>
+<a class="related-post" href="/bar-talk/class-components-in-vue-are-no-longer-happening">
+<span class="main-tag">vue</span>
+Class Components in Vue are No Longer Happening
+</a>
+</div>
+</div>
+<div id="comments" class="p-t-md" style="
+            background: #faf8f4;
+            padding: 0 25px;
+            border-radius: 10px;
+            border: solid 1px #f8f2e8;
+            box-shadow: 0 0px 3px 0 rgba(88,88,102,.07);
+        ">
+<div class="inject-comments" data-post-url="https://scotch.io/tutorials/vue-authentication-and-route-handling-using-vue-router" data-post-id="38366">
+</div>
+</div>
+</div>
+</div>
+<div class="column is-narrow is-right">
+<div class="article-inner">
+<div class="article-sidebar">
+<div class="sidebar-sticky">
+<div class="sidebar-item" style="height: 20%; top: 0">
+<div class="make-me-sticky">
+<div class="is-hidden-with-subscription has-text-centered">
+<div id="bsa-zone_1537909991-1_123456"></div>
+</div>
+<div class="m-t">
+<div class="react-syndicate" data-is-sidebar="true" data-take="1"></div>
+</div>
+</div>
+</div>
+<div class="sidebar-item" style="height: 40%; top: 21%">
+<div class="make-me-sticky">
+<div class="is-hidden-with-subscription has-text-centered">
+<div id="bsa-zone_1537909991-2_123456"></div>
+</div>
+</div>
+</div>
+<div class="sidebar-item" style="height: 30%; top: 62%">
+<div class="make-me-sticky">
+<div class="is-hidden-with-subscription has-text-centered">
+<div id="bsa-zone_1537909991-3_123456"></div>
+</div>
+<a class="sidebar-youtube" href="https://bit.ly/2wHek7d" style="
+    margin-top: 10px;
+    background: #E20001;
+    display: block;
+    padding: 15px 10px 17px;
+    text-align: center;
+    position: relative;
+    color: #fff;
+    font-size: 14px;
+    border-radius: 10px;
+    overflow: hidden;
+">
+<i class="fab fa-youtube fa-5x" style="
+        position: absolute;
+        left: -18px;
+        top: -3px;
+        color: #9e0001;
+    "></i>
+<span>Watch on YouTube</span>
+</a>
+<style>
+
+</style>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<footer>
+<div class="article-end">
+<div class="section is-small" style="background: #fff">
+<div data-spotim-module="recirculation" data-spot-id="sp_D7GE1sbz"></div>
+</div>
+<section class="section is-author p-y-xl" style="background: #CBCED4">
+<div class="container">
+<div class="columns">
+<div class="column">
+<div class="article-author is-large is-horizontal">
+<a href="/@codebeast" class="author-avatar image " title="Chris Nwamba's Avatar">
+<img class="lazy" data-src="https://scotch-res.cloudinary.com/image/upload/w_auto,h_auto,q_auto:good,f_auto,c_fill,g_face/v1552457957/yegxcyzwauxtpebjs2hx.jpg" alt="Chris Nwamba">
+</a>
+<h3 class="title is-5">
+<a href="/@codebeast" title="Chris Nwamba">Chris Nwamba</a>
+</h3>
+<div class="m-b-sm">
+<a href="https://twitter.com/intent/follow?screen_name=codebeast" class="button is-info is-small ">
+Follow @codebeast
+</a>
+</div>
+<div class="author-bio"><p>JavaScript Preacher. Building the web with the JS community.</p></div>
+<div class="links">
+<div class="author-links">
+<a href="https://twitter.com/codebeast" target="_blank" rel="noopener noreferrer" title="Twitter @codebeast">
+<span class="icon color-twitter">
+<i class="fab fa-twitter fa-2x"></i>
+</span>
+</a>
+<a href="https://facebook.com/nwambachristian" target="_blank" rel="noopener noreferrer" title="Facebook">
+<span class="icon color-facebook">
+<i class="fab fa-facebook fa-2x"></i>
+</span>
+</a>
+<a href="https://github.com/christiannwamba" target="_blank" rel="noopener noreferrer" title="GitHub">
+<span class="icon icon-github has-text-grey-dark">
+<i class="fab fa-github-alt fa-2x" data-fa-transform="down-0.75"></i>
+</span>
+</a>
+</div>
+</div>
+<div class="author-action m-t-sm m-b-0">
+<a href="/@codebeast" title="View Chris Nwamba's Profile" class="button is-dark is-rounded is-fullwidth">
+View My 171 Posts
+</a>
+</div>
+</div>
+</div>
+<div class="column is-narrow is-hidden-touch" style="align-self: center; flex-basis: 500px">
+<div class="card is-scotch  ">
+<a class="card-image" href="/tutorials/create-a-custom-usefetch-react-hook" title="Create a Custom useFetch() React Hook">
+<div class="image is-2by1 lazy" data-src="https://scotch-res.cloudinary.com/image/upload/w_auto,q_auto:good,f_auto/v1559752519/feljgaq20jwdi9auuwa9.png">
+</div>
+</a>
+<div class="card-content">
+<h2 class="title is-4">
+<a href="/tutorials/create-a-custom-usefetch-react-hook">Create a Custom useFetch() React Hook</a>
+</h2>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+</div>
+</footer>
+</article>
+</main>
+
+<footer id="scotchy-footer" class="section is-small p-t-xs p-b-sm">
+<div class="footer__projects is-hidden-mobile is-hidden-tablet-only">
+<div class="container">
+<div class="columns center-flex-v">
+<div class="column is-8">
+<div class="footer__about">
+<div class="about__title">
+<div class="logo center-flex-v">
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="30" height="70">
+<image width="100%" height="100%" xlink:href="data:img/png;base64,iVBORw0KGgoAAAANSUhEUgAAAd8AAAM5BAMAAAC0rCbdAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAGFBMVEUAAAD////NqEjt1H+lfjGkfjCkfS8AAAB5F91IAAAAAXRSTlMAQObYZgAAAAFiS0dEAIgFHUgAAAAJcEhZcwAALiMAAC4jAXilP3YAAAAHdElNRQfhAwIPGBhmTpfuAAAQs0lEQVR42u3cS24cSw4FUKVdC8jawYMGGj9ArbnQXUt4mjcagva/hLY+lqsq40MyyCCZde/MhpQZJy8jsiwbvrujZDm+ZyV9rUM+VnfUvOLNgY8ZwJrLAzhWAA54xRRgb1c1+i8RgGMFYIABBhhggAMFYIABplwwOlhxfQAHC8DhLghwsPUF/zm8/msT4GgBGGCAAQYY4EABGGCACdcLD9ZbIMDRAnCw6yUBe6sa0X6NABwtAAMMMMAAAxwoAAMMMMCby8UHq60Q4HABONTlsoBXb1UrAAMMMMAAe6MABhjgoaslAGstEeB4AVjhat6mZnTPVYDjBWCA2RfLAFZaI8ABYwBevU0AXwRggAHuXCsFWGeRAEcMwMPX8hZ1onmyAhwxAI9eKgdYZZUAhwzAo5davUW9AAwwwM0rJQFrLBPgmNEGe3u60TtqAI4ZgMculAWssE6Ag0YZvHp7+gEYYIAb10kDHl8owFGjC/bWEKJ12AAcNUrgLJ8s1VYKcNiogldvDSUAA0y/SiLw6FIBjhtNsLeFFJ3jBuC4UQHn+aCltFaAA0cRvHpbaAEYYOo1UoHHFgtw5OiBvSXEaBw4twbO9LlDZbUAhw7A0kus3hJqABZeIRl4ZLkAx44W2NtBzviRc2vgXK9hhfUCHDxK4NXbQQ/Aou9PB5YvGODo0QF7KxgZPXRuDZztNTy8YoDDRwW8eis4GQOneyuNLhng+AFY8N3eBlaGztl8b6XBNQOcIArg1dvAC8Ds700Jli0a4AwZB3sLmBk4eDK+lYZWDXCKDINXbwE3cnDKQ3pk2QDnyCjYe/3zwDkP6YF1A5wkAPO+cfVePz9ScNK3knzhAGfJGNh79YIID5+sh7R45QCnyRB49V69JDJw2kNaunSA80S09LxnlnDtACcKwJQkPrNkiwc4U+Rg75ULI/hYnPnMEq0e4FQRg1fvlUvDB6c+pCXLBzhX2MvPfWYJ1g9wsgDcS/Iziw8AOFuYgOxbmC0AOF0Abif9mcUlAJwvLEL+Lcw0AJwwALeygzOLhwA4YxiIPWxhlgLglAG4nl2cWRwGwDlDZuxjCzMcACcN2bGTLUyHAJw1AJezlzOLLAE4bYiS3WxhKgXgvCFR9rOFiRaAEwfgUnZ0ZtEwAGcOAbOnLUzSAJw6BM2utjCFA3DuAHydfZ1ZBA/AydP17GwL90EAZ08HtLct3BUBnD4AX2Z3Z1aPBHD+NEn728IdE8A7CMDn2eGZ1UYBvIc0UHvcwk0VwLsIwH+yyzOrxQJ4H6my9rmFGy6AdxKAf2enZ1YdBnDs/Lj/yl9jYG8HU0shL2VwojPrktslV2R5wPeFtMTJwT/u75niJnj19vRyX0tDXAbnOKTv7wXiMi0F+P5eIs4Lvm9HAvYmtfKj461WXDye4h/SXW9VXLTFB/e9taHOCaZ4KxU3wKs3a8xbq7gEDn5IE72Viku42GCqt1JxOjDhgG5WXAd7y4a95YoLB1ToQ5rjLVZc0EUGs7zFinOBWQPNBK/eOAVvcaa34LiHNNdbrHjLCwvme0sV5wGzB5oH9uapeEsznQYs8hYq3pzJQd9KsoKr4GPjN0JE6C3MdBKw1EsGr97Cy4gLLsx0BrDcW6j4GhzxNTzgrYHX6q8DZKTg7UwnAI94qWBvo5p3O9NLdPDQQPfB8V7Dg97NTF8Jw4FHC04HHvXSwKs3U8+73cShwcMD3QUHew0reDczfUmMBdYoOBVYw0sCe0O/olLwZhMvccE63jxgpYKb4EifO7S8ZfAxHljLe31qRQWrFUwAr97Y96h5K++laGC9gpOA9bybU+scHOaDlmLBFfAaC6zpzQBWLbgPZq7u8SxKYFVv+b0kBT9u8ne0ghXBPx/LGTXrehtg3getGneYrFxw46MWC/zYzgBZ2asD/vnYTZSCVcAEr5is7b1+L23Aq5ZXNtfqBTc+W1LBRK5MrO8dBtO9grE2KHgUTJ1nmdjAWweTPkozvcyxtii4/mGaAmZ7eWIL7/V7iQfmezlik4J7YHUvQ2zirX+Y7oMFA80R2xQ8AhZ6qWIb7wBYWjBRbFSwHDzgJYmNvHLwiJcgtiq4Cu79YWmoYILYylv982EPPOjtic0Krv75sAMeLfix87naztsGr2YFt8WGBdf+9NAGKxTcFBt6ZWAVb30bWxbsCa6KLb0isM5EV4fatGARWMtbEZt6JWC1gstDbVtwDXycAy6Jbb21n/G0wIrewlAbFywAaxZcEBt7/cFXQ21dcBtsP9EbsbW39s8t62Dlgq+G2rzgCODzis29fLC691xs7w0B/h7qHwHB+hN9VvEEbwzw47yCg4AfpxXMBtt4P4Z6SsFRwI+zCuaCjSb6veI5BYcBP/49xxsH/K+YYDvvy79vC/xyOt0U+Omf02lOxTzwT8OCJ1UcA/xe8KSKY4A/Cp4jDgH+LHjOUEcAP30VPKViHth0oOdUHAD8PdBTKg4APivYvuK//MHnBdtXHAB8UbB5xf7gl38uwcYVu4OfrrzWFfPAP80H2rxib/C2YOOKncFP24KNK3YGl7y2FfuCSwNtXPE16XgBXo3B5YJNK3YFv/xTARtW7Al+qnktK/YEv1S9hhWXwbV/iacKbhRsWDEPrPnR8qlRsF3Ff/mBm16ziv3AzYG2q7gDPpqBnzoFW1V8DV5mgbvenYGrHzmsZ5oL/jlroK0qviuC17s72z89ULw2FfuACQNtVPFDD7xagHtvJMOK38pvpTr47j8KXtJA21T8Xzb4pDDQVK9+xQ8eYOIGtgE/18GVz5an0ZmmbmCTmX6rgC/eyLpg+ga2qPi1fEi3wIfBmWZ51SsWgYcqZmxgg4ofROCRilkbWL/ih1MDXPvrtBEwbwPrg7dn1vnRXHsvyWda4NWd6dfGW6kBFlcs8KpW/CAFCyvmHlif+Z8i+NQEVz55HKQVy7ynVz3w2+bMKvyX6aVjWlQx/4BW38WvzUO6BRZULDmwlMEPMvD7JuZXLPfqHVuFLXxprJ9a7IpHvGoVv7XPrDaYV/GQV63iVyH4wK540KtUcWELc8CMike9ShU/nHrg1jHNqHjcqwN+O7UP6fYxTRcreHVm+rV3SPfAtKHW8KpU/NAHN49povhFxatR8a8t3DmkO6cWaaiFn58tKn7rnll9cE/8pOYdr/jXRFPB1U3cEyuNs07FpYlersFLF3yaUq9GxW+n/plFAVdPLtV6FSp+ZYAbm7hW8otuveMVN7bwcfM7HfC2ZAPuKPjXRPfPrPr/E7dZzcXeteCeBmf6lXJmUY7p87x8xkQ7WPEDEUw5tf7EpliVit8nun9mUU+tWRmo+FfBlDOLemrNytBEU84sxqkVu+LiRDfA1E0cteKPgilnVv3UOqQSP7x/610FTHgKjmDZUL8VweXpjbWJZRWXJ7pCC7aJRRV/FEzbwnXwIVHF7wVXt/BK+20/ML/ihzK4UuUSbRPzKy5PdHV2w4G5FX8WTD2zAm5irvijYPIWjgjmDfVnwQxwvE3Mq/izYPoWjgjmVPxVMAMccaYZ4s+CGRMdE0we6q+CWeCIM00WfxXMmeg62LNi4lBXC26BQ840seKvglkT/Q2ONdMk8dtXwc90U9hNTBH/HmjeFv4GB5tpwjb+PdAnOqnzOHzBPfHvgS4U3NzCUTdxT/w90NwtHPXF1BE/fA8086UUeBM3xX+87C0cdxM3xN8bWLCFGyN/8PbWxGfeE8OTYKaL7+OHc69gokPP9Glb8tl5dRJNdOyZPl2V/PB24ZVMdPCZ/kiNK5voxtd4Q8/z9p7r33wWgaPPdCOiiW7tc29QJ89V8B0FHHymSWDSROedaeFEt77Mm9TMsxhcH4SDN6oVDmQXMy0uOOlMyyc66UwPTHTKikcK/v7STBXXC6aAE8700EQnnOmxiU4402MT3fxqb1ox9YJpE92ah4M3rhSWgDnTESsuFMyb6ObXH7x52/Aay1+xQsFN8MEbeB3ehO5gpjUmOtNMq0x0pop1Cv4Gh6/4mbd20UwfvJHn4U2nbKYjVVwoWDTRaSpWKzhJxYoFt7e+N7ThlR1Z50+qVPHBm/oZ7rLlMx2j4lLB4onufOvBG/sedk3JK9YuuL39D97cdsEicHv/e3PbBa93ksSuWL/gzvNyFvMXPFqx71A/WxQcuWKTggNXbFTwn0uUn1ks73fBA+DONQ5eYEk7mSu2K7h7lUBelYK7lzl4gEXVJK7YtOD+hYJ41QruXukwGyzrRbHiyWJZLZoVzx3qZ/OCCRfz96oW3L/aYR5Y2olyxdPE0kq0K5411M9zCqZc0NWrXjDlip5e9YJJl/TzGhRMuebBGjzShknFxuKRMmwqthUPdTFUsY94bGFjFTcepJl4cF1mFVuJR5clC+lRmoiHVyUL7VkaiMcXJQzxYSpznzXWJMviISZ6LQqmX36al1qBufig5W3fxtzLuMOEes0H+vIWE8Q9r33B5/foPtThsVZcy0COjLuY1suZtpEsnNsMlKz76EdyZD1YIVl9HfPEEjJlFaxJG8vCnSUm2WYRIzmyb8Yg89ewmoMXvph4Yj/bPfOhHGX309JeLmCdAJbfsDrbrNsvs72XQ82/pbTY0t2neK+Gmi8eyuDTVrjpXPHlrafd9ugldnvUXmK30Vp8xJd3nei9vvUksdtOuttUPOXuR8eCN3ef/CF+/utwU7G1eJn+gK9znCreeNfp4G3Fc3566FVwqeIJPxD3K7hYsfnf8XgWXFyH7V9b+hZcqdjwnx54F1wBK69msb8FPRWwZsnmN2ClVrFaA1NmSAWs04H181Rckcai6o9T5Wmqg0fJjQv7gZe2eGBhhk/SECwmd67rB77rgUWr6z1G4VOcBeaS+9cLD5b8j5rJwcRVqj8+/fS2G322GVdy9DLBtXqYV8kFVgjAAAOcGrzeGvjmGgYYYIABBhjgSjy8SX4AAHBK8OICjvxzaYABzgX28Yb928P9gRcncMR/AbBPsJfXbaYB3jl4cQMH+5d4uwX7eZ1m+tbAiyPYZaZvDuzpdZnpWwMvrmCHmb45sK/XYaYB3jl4cQZP38Q3B/b2Tp9pb6/r/x/iE4BN4609zp5pb+1s8OKtfQ/AhvG2fmQF2CyLt/UzAJvFW/qVFWCjLN7S3wEYYJ14O7+zAmySxdv5JwCbxFt5lhVggyzeyvMAbBBv40VWgNWzeBsvA7B6vIVXWQFWzuItvA7AyvH2bbICrJrF27cNwKrx1hWyAgywPIu3rhSAFeNtK2YFWC2Lt60cgNXiLatkBVgpi7esFoCV4u2qZgVYJYu3qx6A9z3RVjPtrZoNXrxVrQC874m2mWlv02zw4m1qB+B9T7TFTHuLZoMXb1EvAAPMi7enmxXgfU+09kzfHNhbQ4juTHtrADYGL94aSgAGmB5vCykrwABTs3hbaAEYYIAr8ZYQswIMMMAAv2fxllADMMAAAwxw5AAMMMAAAxw5AEvjDSFmBRhggFOD1bxZjmmAdz7TK8AAk7N4YyhR9KaoWLPgGwQv3px+VL23B44/07oTnaBiZW/4irULDl+xujd4xfoFB6/YwBu6YouCQ1ds4g0sNvKGHWqbgY4rNvTGHGpDb0ixqTeg2NgbTmzuvQt1cq0zvIFKnsMNU/KkesOUPJMbgDyb60z24PqRVy+uj9lV+5mbKfcsU3r2Rl7nNqqdgY6K/Z1lz2Ncz+571XMnlbLls5z/BwPxdwyhWA63AAAAAElFTkSuQmCC"></image>
+</svg> </div>
+<h4>Scotch</h4>
+</div>
+<p class="p-r-lg m-b-xs">Top shelf learning. Dev tutorials explaining the code <strong style="color: #DDD">and the choices behind it all.</strong></p>
+<p>Made with 💖 by <a href="https://twitter.com/chrisoncode" class="has-text-light">Chris</a> and <a href="https://twitter.com/whatnicktweets" class="has-text-light">Nick</a>.</p>
+<ul class="footer-social-links list-unstyled">
+<li><a href="https://twitter.com/scotch_io" class="icon-twitter" title="Follow Scotch on Twitter">
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 410.155 410.155" style="enable-background:new 0 0 410.155 410.155;" xml:space="preserve" width="50" height="50">
+<path style="fill:#23A0F2;" d="M403.632,74.18c-9.113,4.041-18.573,7.229-28.28,9.537c10.696-10.164,18.738-22.877,23.275-37.067
+	l0,0c1.295-4.051-3.105-7.554-6.763-5.385l0,0c-13.504,8.01-28.05,14.019-43.235,17.862c-0.881,0.223-1.79,0.336-2.702,0.336
+	c-2.766,0-5.455-1.027-7.57-2.891c-16.156-14.239-36.935-22.081-58.508-22.081c-9.335,0-18.76,1.455-28.014,4.325
+	c-28.672,8.893-50.795,32.544-57.736,61.724c-2.604,10.945-3.309,21.9-2.097,32.56c0.139,1.225-0.44,2.08-0.797,2.481
+	c-0.627,0.703-1.516,1.106-2.439,1.106c-0.103,0-0.209-0.005-0.314-0.015c-62.762-5.831-119.358-36.068-159.363-85.14l0,0
+	c-2.04-2.503-5.952-2.196-7.578,0.593l0,0C13.677,65.565,9.537,80.937,9.537,96.579c0,23.972,9.631,46.563,26.36,63.032
+	c-7.035-1.668-13.844-4.295-20.169-7.808l0,0c-3.06-1.7-6.825,0.485-6.868,3.985l0,0c-0.438,35.612,20.412,67.3,51.646,81.569
+	c-0.629,0.015-1.258,0.022-1.888,0.022c-4.951,0-9.964-0.478-14.898-1.421l0,0c-3.446-0.658-6.341,2.611-5.271,5.952l0,0
+	c10.138,31.651,37.39,54.981,70.002,60.278c-27.066,18.169-58.585,27.753-91.39,27.753l-10.227-0.006
+	c-3.151,0-5.816,2.054-6.619,5.106c-0.791,3.006,0.666,6.177,3.353,7.74c36.966,21.513,79.131,32.883,121.955,32.883
+	c37.485,0,72.549-7.439,104.219-22.109c29.033-13.449,54.689-32.674,76.255-57.141c20.09-22.792,35.8-49.103,46.692-78.201
+	c10.383-27.737,15.871-57.333,15.871-85.589v-1.346c-0.001-4.537,2.051-8.806,5.631-11.712c13.585-11.03,25.415-24.014,35.16-38.591
+	l0,0C411.924,77.126,407.866,72.302,403.632,74.18L403.632,74.18z" />
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+</svg>
+</a></li>
+<li><a href="https://facebook.com/scotchdevelopment" class="icon-facebook" title="Follow Scotch on Facebook">
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" x="0px" y="0px" width="50" height="50" viewBox="0 0 96.124 96.123" style="enable-background:new 0 0 96.124 96.123;" xml:space="preserve">
+<g>
+<path d="M72.089,0.02L59.624,0C45.62,0,36.57,9.285,36.57,23.656v10.907H24.037c-1.083,0-1.96,0.878-1.96,1.961v15.803   c0,1.083,0.878,1.96,1.96,1.96h12.533v39.876c0,1.083,0.877,1.96,1.96,1.96h16.352c1.083,0,1.96-0.878,1.96-1.96V54.287h14.654   c1.083,0,1.96-0.877,1.96-1.96l0.006-15.803c0-0.52-0.207-1.018-0.574-1.386c-0.367-0.368-0.867-0.575-1.387-0.575H56.842v-9.246   c0-4.444,1.059-6.7,6.848-6.7l8.397-0.003c1.082,0,1.959-0.878,1.959-1.96V1.98C74.046,0.899,73.17,0.022,72.089,0.02z" fill="#FFFFFF" />
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+</svg>
+</a></li>
+<li><a href="https://github.com/scotch-io" class="icon-github" title="Follow Scotch on GitHub">
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" x="0px" y="0px" width="50" height="50" viewBox="0 0 512 512" style="enable-background:new 0 0 512 512;" xml:space="preserve">
+<g>
+<path d="M256,0C114.615,0,0,114.615,0,256s114.615,256,256,256s256-114.615,256-256S397.385,0,256,0z M408.027,408.027   c-19.76,19.759-42.756,35.267-68.354,46.094c-6.502,2.75-13.105,5.164-19.801,7.246V423c0-20.167-6.916-35-20.75-44.5   c8.668-0.833,16.625-2,23.875-3.5s14.918-3.667,23-6.5c8.084-2.833,15.334-6.208,21.75-10.125c6.418-3.917,12.584-9,18.5-15.25   c5.918-6.25,10.875-13.333,14.875-21.25s7.168-17.417,9.5-28.5c2.334-11.083,3.5-23.292,3.5-36.625c0-25.833-8.416-47.833-25.25-66   c7.668-20,6.834-41.75-2.5-65.25l-6.25-0.75c-4.332-0.5-12.125,1.333-23.375,5.5s-23.875,11-37.875,20.5   c-19.832-5.5-40.416-8.25-61.749-8.25c-21.5,0-42,2.75-61.5,8.25c-8.833-6-17.208-10.958-25.125-14.875s-14.25-6.583-19-8   s-9.167-2.292-13.25-2.625s-6.708-0.417-7.875-0.25s-2,0.333-2.5,0.5c-9.333,23.667-10.167,45.417-2.5,65.25   c-16.833,18.167-25.25,40.167-25.25,66c0,13.333,1.167,25.542,3.5,36.625s5.5,20.583,9.5,28.5s8.958,15,14.875,21.25   s12.083,11.333,18.5,15.25s13.667,7.292,21.75,10.125s15.75,5,23,6.5s15.208,2.667,23.875,3.5c-13.667,9.333-20.5,24.167-20.5,44.5   v39.115c-7.549-2.247-14.99-4.902-22.3-7.994c-25.597-10.827-48.594-26.335-68.353-46.094   c-19.758-19.758-35.267-42.756-46.093-68.354C46.679,313.195,41,285.043,41,256s5.679-57.195,16.879-83.675   c10.827-25.597,26.335-48.594,46.093-68.353c19.758-19.759,42.756-35.267,68.353-46.093C198.805,46.679,226.957,41,256,41   s57.195,5.679,83.676,16.879c25.598,10.827,48.594,26.335,68.354,46.093c19.758,19.758,35.266,42.756,46.092,68.353   C465.32,198.805,471,226.957,471,256s-5.68,57.195-16.879,83.675C443.295,365.271,427.785,388.27,408.027,408.027z" fill="#FFFFFF" />
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+</svg>
+</a></li>
+<li><a href="https://www.youtube.com/channel/UCLyOul64B-SwBpOd9f2Kfxw" class="icon-github" title="Follow Scotch on YouTube">
+<i class="fab fa-fw fa-youtube has-text-danger"></i>
+</a></li>
+</ul>
+</div>
+</div>
+<div class="column is-4">
+<div class="is-hidden-with-account" style="
+                        border-radius: 5px;
+                        background: #E8D87D;
+                        padding: 25px 10px 5px 10px;
+                    ">
+<style>
+.ml-subscribe-form-1112100 {
+    color: #574f08;
+    text-align: center;
+    margin: 0 auto 20px;
+    max-width: 90%;
+}
+
+.ml-subscribe-form-1112100 h4 {
+    font-size: 22px;
+    color: #574f08;
+    margin-bottom: 20px;
+}
+
+@media  screen and (max-width: 768px) {
+    .ml-subscribe-form-1112100 h4 {
+        font-size: 16px;
+    }
+}
+</style>
+<div id="mlb2-1112100" class="ml-form-embedContainer ml-subscribe-form ml-subscribe-form-1112100">
+<div class="ml-form-align-center ">
+<div class="ml-form-embedWrapper embedForm">
+<div class="ml-form-embedBody ml-form-embedBodyHorizontal row-form">
+<h4>We can't send Scotch drinks...<br>but we can send cool dev articles</h4>
+<form class="ml-block-form" action="https://app.mailerlite.com/webforms/submit/w3o9h2" data-code="w3o9h2" method="post" target="_blank">
+<style type="text/css">
+              .ml_message_wrapper {
+                position: absolute !important;
+                left: -9999px !important;
+              }
+            </style>
+<div aria-label="Please leave the following field empty" class="ml_message_wrapper">
+<input type="text" name="ml_message" tabindex="-1" value="" placeholder="Message" autocomplete="off" title="message">
+<input type="text" name="ml_email" tabindex="-1" value="" placeholder="Email" autocomplete="off" title="email">
+<input type="text" name="ml_name" tabindex="-1" value="" placeholder="Name" autocomplete="off" title="name">
+</div>
+<div class="field has-addons">
+<div class="control is-expanded has-icons-left ml-field-group ml-field-email ml-validate-email ml-validate-required">
+<input type="email" class="form-control input is-medium" data-inputmask="" name="fields[email]" value="" placeholder="Email" aria-label="Your Email">
+<div class="icon is-small is-left">
+📧
+</div>
+</div>
+<div class="control">
+<button type="submit" class="primary button is-info is-medium">Subscribe</button>
+<button disabled style="display: none;" type="button" class="button is-info is-medium is-loading loading">
+🌟 Magic ✨
+</button>
+</div>
+</div>
+<style type="text/css">
+              .ml-form-recaptcha {
+                margin-bottom: 20px;
+              }
+
+              .ml-form-recaptcha.ml-error iframe {
+                border: solid 1px #ff0000;
+              }
+            </style>
+<input type="hidden" name="ml-submit" value="1">
+</form>
+</div>
+<div class="ml-form-successBody row-success" style="display: none">
+<div class="ml-form-successContent">
+<h4>Thank you!</h4>
+<p>You have successfully joined the Scotchy super duper web dev awesome mailing list.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<script>
+    function ml_webform_success_1112100() {
+        document.querySelector('.ml-subscribe-form-1112100 .row-success').style.display = 'block';
+        document.querySelector('.ml-subscribe-form-1112100 .row-form').style.display = 'none';
+        // var $ = ml_jQuery || jQuery;
+        // $('.ml-subscribe-form-1112100 .row-success').show();
+        // $('.ml-subscribe-form-1112100 .row-form').hide();
+      }
+  </script>
+<img class="lazy" data-src="https://track.mailerlite.com/webforms/o/1112100/w3o9h2?vaa4d608450783acdc64d5338ff94f6d5" width="1" height="1" style="max-width: 1px; max-height: 1px; visibility: hidden; padding: 0; margin: 0; display: block;" border="0">
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="footer__bottom footer--dark p-b-sm">
+<div class="container">
+<div class="footer__copyright columns">
+<div class="column has-text-left is-hidden-touch partners">
+<nav>
+<ul class="list-unstyled powered-by is-hidden-mobile" style="justify-content: flex-start">
+<li><a href="https://cloudinary.com/?utm_source=scotch&utm_medium=referral&utm_campaign=powered_by&utm_content=footer_logo">
+Images hosted and processed by<br>
+<img class="lazy" data-src="/img/logos/cloudinary.png" alt="Cloudinary">
+</a></li>
+<li><a href="https://algolia.com?utm_source=scotch&utm_campaign=coolstuff">
+Real-time search by<br>
+<img class="lazy" data-src="/img/logos/algolia.png" alt="Algolia" style="padding-top: 5px">
+</a></li>
+<li><a href="https://m.do.co/c/7a59e9361ab7">
+Hosted by<br>
+<img class="lazy" data-src="/img/logos/digital-ocean.png" alt="Digital Ocean" style="padding-top: 4px">
+</a></li>
+</ul>
+</nav>
+</div>
+<div class="column has-text-right">
+<nav style="height: 100%">
+<ul class="list-unstyled" style="align-items: center; justify-content: flex-end; height: 100%">
+<li><a href="https://discover.buysellads.com/tech/scotchio">Advertise</a></li>
+<li><a href="/privacy">Privacy</a></li>
+<li><a href="/terms">Terms</a></li>
+<li><a href="/rules">Rules</a></li>
+<li><a href="/contact">Contact</a></li>
+<li>1853-2019 © Scotch.io, LLC</li>
+</ul>
+</nav>
+</div>
+</div>
+</div>
+</div>
+</footer>
+<script src="//m.servedby-buysellads.com/monetization.js" data-cfasync="false"></script>
+<script src="//cdn-s2s.buysellads.net/pub/scotch.js" data-cfasync="false" defer></script>
+<script>
+    if (window.bsa_targeting !== undefined) {
+        window.bsa_targeting.push(['scotchio_section', ['single-post']]);
+        window.bsa_targeting.push(['scotchio_postid', ['38366']]);
+    }
+</script>
+<script>
+    if (window.bsa_targeting !== undefined) {
+                    window.bsa_targeting.push(['scotchio_tags', ["vue","authentication"]]);
+            }
+</script>
+<script src="https://cdn.polyfill.io/v2/polyfill.min.js" defer></script>
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-36045075-1', 'auto');
+ga('set', 'transport', 'beacon');
+ga('send', 'pageview');
+</script>
+<script src="/js/svg-blobs/lib/perlin.min.js"></script>
+<script src="/js/svg-blobs/lib/resize-detector.min.js"></script>
+<script src="/js/svg-blobs/lib/svg-blob.min.js"></script>
+<script src="/js/manifest.js?id=6ab0d61ca64ff4f3805b" defer></script>
+<script src="/js/vendor.js?id=305881a8c8d9cee3bccc" defer></script>
+<script>
+    // used to lazyload spot im in lazyload-comments.js
+    window.scotchy = window.scotchy || {};
+    window.scotchy.articleId =  "38366";
+    window.scotchy.articleUrl = "https://scotch.io/tutorials/vue-authentication-and-route-handling-using-vue-router";
+</script>
+<script src="/js/app.js?id=b1e90e6d8b7400d2a9e6" defer></script>
+<script>
+    const youtubeBanner = document.getElementById('youtube-banner');
+
+    fetch('/api/youtube/check')
+        .then(resp => resp.json())
+        .then(data => {
+            if (data.is_streaming) {
+                youtubeBanner.href = data.link;
+                youtubeBanner.style.display = 'block';
+
+                // temporarily hide the vue book banner
+                document.getElementById('vue-book-banner').style.display = 'none';
+            }
+        });
+</script>
+<script>
+                    // published at
+            if (window.ga !== undefined)
+                window.ga('set', 'dimension4', 'July 6, 2018');
+        
+                    // main tag
+            if (window.ga !== undefined)
+                window.ga('set', 'dimension5', 'vue');
+        
+        // author
+        if (window.ga !== undefined) {
+            window.ga('set', 'contentGroup1', "Chris Nwamba")
+            window.ga('set', 'dimension1', "Chris Nwamba")
+        }
+    </script>
+<style>
+    #_stickybox_ {
+        left: 20px;
+        right: auto !important;
+    }
+</style>
+<script>
+    (function() {
+        if (typeof _bsa !== 'undefined' && _bsa) {
+            setTimeout(function() {
+                _bsa.init('stickybox', 'CKYIT277', 'placement:scotchio'); // STICKYBOX
+            }, 20000);
+
+            // _bsa.init('flexbar', 'CKYIT27N', 'placement:scotchio'); // FLEXBAR
+        }
+    })();
+</script>
+<script type="application/ld+json">
+{
+    "@context": "http://schema.org",
+    "@type": "Organization",
+    "@id": "https://scotch.io#organization",
+    "name": "Scotch.io",
+    "url": "https://scotch.io",
+    "sameAs": [
+        "http://www.facebook.com/scotchdevelopment",
+        "http://twitter.com/scotch_io",
+        "http://instagram.com/scotch_io",
+        "http://www.linkedin.com/in/scotch_io",
+        "http://plus.google.com/scotch_io"
+    ],
+    "legalName": "Scotch.io, LLC",
+    "logo": {
+        "@type": "ImageObject",
+        "url": "https://scotch.io/img/school-logo-sticker.png",
+        "width": 37,
+        "height": 60
+    },
+    "founder": {
+        "@type": "Person",
+        "name": "Chris Sevilleja",
+        "image": {
+            "@type": "ImageObject",
+            "url": "https://scotch-res.cloudinary.com/image/upload/w_300,q_auto:good,f_auto,c_fill,g_face/media/1/w7Vhk81SyClJPlDQPMLh_17795826_10154678250924582_8102840950354615336_n.jpg",
+            "width": 300,
+            "height": 300
+        }
+    }
+}
+</script>
+<script type="application/ld+json">
+{
+    "@context": "http://schema.org",
+    "@type": "WebSite",
+    "@id": "https://scotch.io#website",
+    "url": "https://scotch.io",
+    "name": "Scotch",
+    "alternateName": "Scotch.io",
+    "potentialAction": {
+        "@type": "SearchAction",
+        "target": "https://scotch.io/search?q={search_term_string}",
+        "query-input": "required name=search_term_string"
+    },
+    "author": {
+        "@id": "https://scotch.io#organization"
+    }
+}
+</script>
+<script type="application/ld+json">
+{
+    "@context": "http://schema.org",
+    "@type": "WebPage",
+    "@id": "https://scotch.io/tutorials/vue-authentication-and-route-handling-using-vue-router",
+    "url": "https://scotch.io/tutorials/vue-authentication-and-route-handling-using-vue-router",
+
+        "headline": "Vue Authentication And Route Handling Using Vue-router",
+    
+    "description": "Vue is a progressive Javascript framework that makes building frontend applications easy. Coupled with vue-router, we can build high performance applications with complete dynamic routes. Vue-router is an efficient tool and ca",
+
+    
+    "potentialAction": {
+        "@type": "SearchAction",
+        "target": "https://scotch.io/search?q={search_term_string}",
+        "query-input": "required name=search_term_string"
+    },
+
+    "publisher": {
+        "@id": "https://scotch.io#organization"
+    },
+
+    
+        "dateCreated": "2018-07-06 04:39:52",
+    
+        "datePublished": "2018-07-06 08:00:00",
+    
+    
+        "dateModified": "2019-06-23 01:18:49",
+    
+        "commentCount": 22,
+    
+    "breadcrumb": {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            {
+                "@type": "ListItem",
+                "position": 1,
+                "item": {
+                    "@id": "https://scotch.io",
+                    "name": "Home"
+                }
+            },
+
+                            {
+                    "@type": "ListItem",
+                    "position": 2,
+                    "item": {
+                        "@id": "https://scotch.io/tutorials",
+                        "name": "Tutorials"
+                    }
+                },
+                {
+                    "@type": "ListItem",
+                    "position": 3,
+                    "item": {
+                        "@id": "https://scotch.io/tutorials/vue-authentication-and-route-handling-using-vue-router",
+                        "name": "Vue Authentication And Route Handling Using Vue-router"
+                    }
+                }
+                    ]
+    },
+    
+    "sourceOrganization": {
+        "@id": "https://scotch.io#organization"
+    }
+}
+</script>
+<script type="application/ld+json">
+{
+    "@context": "http://schema.org",
+    "@type": "TechArticle",
+    "@id": "https://scotch.io/tutorials/vue-authentication-and-route-handling-using-vue-router#article",
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://scotch.io/tutorials/vue-authentication-and-route-handling-using-vue-router"
+    },
+    "url": "https://scotch.io/tutorials/vue-authentication-and-route-handling-using-vue-router",
+    "headline": "Vue Authentication And Route Handling Using Vue-router",
+    "wordCount": 2818,
+    "description": "Vue is a progressive Javascript framework that makes building frontend applications easy. Coupled with vue-router, we can build high performance applications with complete dynamic routes. Vue-router is an efficient tool and ca",
+    "audience": "web developers and designers",
+    "discussionUrl": "https://scotch.io/tutorials/vue-authentication-and-route-handling-using-vue-router#comments",
+
+        "proficiencyLevel": "Intermediate",
+    
+        "image": {
+        "@type": "ImageObject",
+        "url": "https://scotch-res.cloudinary.com/image/upload/w_1500,q_auto:good,f_auto/media/10/qQ3z7tSSqeBR6U9bstqn_Vue_authentication_and_route_handling_using_vue-router.png.jpg",
+        "height": 750,
+        "width": 1500
+    },
+    
+        "keywords": "vue, authentication",
+    
+        "dateCreated": "2018-07-06 04:39:52",
+    
+        "datePublished": "2018-07-06 08:00:00",
+    
+    
+        "dateModified": "2019-06-23 01:18:49",
+    
+        "articleSection": "Tutorials",
+    
+        "commentCount": 22,
+    
+        "author": {
+        "@type": "Person",
+        "name": "Chris Nwamba",
+
+                "image": {
+            "@type": "ImageObject",
+            "url": "https://scotch-res.cloudinary.com/image/upload/w_300,h_300,q_auto:good,f_auto,c_fill,g_face/v1552457957/yegxcyzwauxtpebjs2hx.jpg",
+            "height": 300,
+            "width": 300
+        },
+        
+        "url": "https://scotch.io/@codebeast"
+    },
+    
+    "publisher": {
+        "@id": "https://scotch.io#organization"
+    }
+}
+</script>
+<script>
+(function(m,a,i,l,e,r){ m['MailerLiteObject']=e;function f(){
+var c={ a:arguments,q:[]};var r=this.push(c);return "number"!=typeof r?r:f.bind(c.q);}
+f.q=f.q||[];m[e]=m[e]||f.bind(f.q);m[e].q=m[e].q||f.q;r=a.createElement(i);
+var _=a.getElementsByTagName(i)[0];r.async=1;r.src=l+'?v'+(~~(new Date().getTime()/1000000));
+_.parentNode.insertBefore(r,_);})(window, document, 'script', 'https://static.mailerlite.com/js/universal.js', 'ml');
+
+var ml_account = ml('accounts', '758636', 'y5e6w4v2p6', 'load');
+</script>
+</body>
+</html>

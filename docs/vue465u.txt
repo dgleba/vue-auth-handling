@@ -1,0 +1,210 @@
+
+works!!
+
+https://github.com/dgleba/vue-auth-handling.git
+
+
+
+
+vm on ip 88.39 on redwe458
+
+
+----------------------------------------------------
+Title:  .
+-----------------------2019-07-03[Jul-Wed]18-21PM
+
+https://scotch.io/tutorials/vue-authentication-and-route-handling-using-vue-router
+
+
+https://github.com/christiannwamba/vue-auth-handling
+
+fork to..
+
+https://github.com/dgleba/vue-auth-handling.git
+
+
+git clone https://github.com/dgleba/vue-auth-handling.git u465-cbw-vjwt
+
+
+update package.json
+-update versions.
+
+
+albe@vamp398:/srv/dkr/465s/u465-cbw-vjwt$ curl 192.168.88.39:3000/me
+{"auth":false,"message":"No token provided."}
+albe@vamp398:/srv/dkr/465s/u465-cbw-vjwt$
+
+
+works.
+
+there are no  alerts / messages in the app. 
+you have to look at localstorage and the browser inspect console to see what's going on.
+see pictures.
+
+
+
+
+
+----------------------------------------------------
+
+.env
+
+
+yes.
+https://www.npmjs.com/package/dotenv
+
+no.
+https://www.twilio.com/blog/2017/08/working-with-environment-variables-in-node-js.html
+
+
+npm install dotenv --save
+
+const envtool = require("dotenv").config();
+
+let t21 = "http://".concat(process.env.HOSTADR, ":3000/register");
+console.log(t21);
+console.log('The value for FOO is:', process.env.FOO);
+
+
+FOO=bar
+
+yes.
+https://stackoverflow.com/questions/50715302/how-to-use-dotenv-with-vue-js
+
+
+----------------------------------------------------
+
+
+
+
+
+
+
+----------------------------------------------------
+----------------------------------------------------
+----------------------------------------------------
+----------------------------------------------------
+----------------------------------------------------
+----------------------------------------------------
+----------------------------------------------------
+----------------------------------------------------
+----------------------------------------------------
+----------------------------------------------------
+----------------------------------------------------
+----------------------------------------------------
+----------------------------------------------------
+----------------------------------------------------
+----------------------------------------------------
+----------------------------------------------------
+----------------------------------------------------
+----------------------------------------------------
+----------------------------------------------------
+----------------------------------------------------
+----------------------------------------------------
+----------------------------------------------------
+----------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+----------------------------------------------------
+
+----------------------------------------------------
+Title:  .
+-----------------------2019-07-03[Jul-Wed]15-44PM
+
+un-needed.     older notes..
+
+
+server..
+
+https://scotch.io/tutorials/vue-authentication-and-route-handling-using-vue-router
+
+
+git clone https://github.com/christiannwamba/vue-auth-handling.git cnw465n2-be
+
+
+npm install --save sqlite3
+
+
+npm install --save bcrypt
+
+got errors..
+
+changed from 2.0.1 to 3.0.6...
+
+  "dependencies": {
+    "bcrypt": "^3.0.6",
+
+now ok. starts. 2019-07-03_Wed_16.17-PM
+
+
+    
+albe@vamp398:/srv/dkr/465s$ curl 192.168.88.39:3000/register
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Error</title>
+</head>
+<body>
+<pre>Cannot GET /register</pre>
+</body>
+</html>
+albe@vamp398:/srv/dkr/465s$
+
+
+albe@vamp398:/srv/dkr/465s$ curl 192.168.88.39:3000/me
+{"auth":false,"message":"No token provided."}albe@vamp398:/srv/dkr/465s$
+
+
+
+----------------------------------------------------
+

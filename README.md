@@ -1,10 +1,24 @@
+# David Gleba
+
+See docs folder.
+
+This is [https://github.com/dgleba/vue-auth-handling.git]
+
+Simple jwt register and login example.
+
 # vue-router-auth
+
+This forked from:
+
+[https://scotch.io/tutorials/vue-authentication-and-route-handling-using-vue-router]
+
+[https://github.com/christiannwamba/vue-auth-handling]
 
 > A simple example of authentication and access control in a [Vue](https://vuejs.org/) app with [vue-router](https://router.vuejs.org/).
 
 ## Build Setup
 
-``` bash
+```bash
 # install dependencies
 npm install
 
@@ -19,6 +33,7 @@ npm run build --report
 ```
 
 ## Built with
+
 - [Vue](https://vuejs.org/) - A progressive JavaScript framework
 - [Vue-router](https://router.vuejs.org/) - The official router for Vue.js
 - [SQLite3](https://www.sqlite.org/index.html) - A self-contained, high-reliability, embedded, full-featured, public-domain, SQL database engine
