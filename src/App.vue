@@ -6,7 +6,11 @@
 
 <script>
 export default {
-  name: 'App'
+  name: 'App',
+  mounted: function() {
+    console.log(process.env.HOSTADR);
+    // console.log(process.env.FO);
+  } 
 }
 </script>
 <style>

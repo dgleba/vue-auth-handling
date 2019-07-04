@@ -57,8 +57,9 @@
                 
                 if (this.password === this.password_confirmation && this.password.length > 0)
                 {
-                    let url = 'http://192.168.88.39:3000/register'
-                    if(this.is_admin != null || this.is_admin == 1) url = 'http://192.168.88.39:3000/register-admin'
+                    let url = 'http://'.concat(process.env.HOSTADR,':3000/register')
+                    if(this.is_admin != null || this.is_admin == 1) url = 'http://'.concat(process.env.HOSTADR,':3000/register-admin')
+                    //'http://process.env.HOSTADR:3000/register-admin'
                     this.$http.post(url, {
                         name: this.name,
                         email: this.email,

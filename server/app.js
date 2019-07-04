@@ -1,4 +1,7 @@
 "use strict";
+
+const envtool = require("dotenv").load();
+
 const express = require("express");
 const DB = require("./db");
 const config = require("./config");
@@ -6,7 +9,7 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const bodyParser = require("body-parser");
 
-const db = new DB("sqlitedb");
+const db = new DB("sqlitedb.sqlite3");
 const app = express();
 const router = express.Router();
 
