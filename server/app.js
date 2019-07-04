@@ -1,6 +1,7 @@
 "use strict";
 
-const envtool = require("dotenv").load();
+const envtool = require("dotenv").config();
+console.log("The value for FOO is:", process.env.FOO);
 
 const express = require("express");
 const DB = require("./db");
